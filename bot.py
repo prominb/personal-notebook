@@ -97,7 +97,6 @@ class ContactAssistant:
             for record in records:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
                 # result += f"{f"{record.name}":<10} {phone_numbers}\n"
-                # name = record.name.value
                 result += "{:<10}: {}\n".format(record.name.value, phone_numbers)
 
             return result.strip()
