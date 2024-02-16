@@ -2,8 +2,10 @@ from classes import Record, AddressBook
 import json
 import os
 
+
 class InputError(Exception):
     pass
+
 
 class ContactAssistant:
     
@@ -13,7 +15,7 @@ class ContactAssistant:
     DEFALUT_TEXT = "\033[0m"
     PURPURE_TEXT = "\033[35m"
     BIRUZA_TEXT = "\033[36m"
-    LIST_COMANDS_BOT = ["hello", "add", "change","phone","show all",'search',"good bye", "close", "exit"]
+    LIST_COMANDS_BOT = ["hello", "add", "change", "phone", "show all", 'search', "good bye", "close", "exit"]
     DOSTUPNI_COMANDY = f"{RED_TEXT}Доступні наступні команди : {GREEN_TEXT}{LIST_COMANDS_BOT}{DEFALUT_TEXT}"
     PISKAZKA_SHOW_ALL = f"\nКоманда - {GREEN_TEXT}show all{YLLOW_TEXT} - покаже доступні контакти{DEFALUT_TEXT}"
     
@@ -45,21 +47,20 @@ class ContactAssistant:
         except (OSError, json.JSONDecodeError, KeyError) as e:
             print(f"Error loading data: {e}")
 
-
     def add_contact(self, name, phone, birthday=None):
         try:
             record = Record(name, birthday)
             record.add_phone(str(phone).strip()) 
             self.address_book.add_record(record)
             self.save_data()
-            return  f"{self.YLLOW_TEXT}Новий контакт успішно додано!!!{self.PISKAZKA_SHOW_ALL}"
+            return f"{self.YLLOW_TEXT}Новий контакт успішно додано!!!{self.PISKAZKA_SHOW_ALL}"
         except ValueError as e:
             raise InputError(str(e))
 
     def change_contact(self, name, phone):
         try:
             record = self.address_book.find(name)
-            if record :
+            if record:
                 if len(phone) == 10 and phone.isdigit():
                     print(phone)
                     record.phones = []  
@@ -67,9 +68,11 @@ class ContactAssistant:
                     self.save_data()  
                     return f"{self.YLLOW_TEXT}Номер телефону успішно змінено!!!{self.PISKAZKA_SHOW_ALL}"
                 else:
-                    raise ValueError(f"{self.YLLOW_TEXT}Номер може містити тільки 10 цифри !!!{self.BIRUZA_TEXT}\n# Приклад - 0931245891")
+                    raise ValueError(f"{self.YLLOW_TEXT}Номер може містити тільки 10 цифри !!!{self.BIRUZA_TEXT}"
+                                     f"\n# Приклад - 0931245891")
             else:
-                raise IndexError(f"{self.YLLOW_TEXT}Такого іменні не знайдено у вашій телефоній книзі !!!{self.DEFALUT_TEXT}{self.PISKAZKA_SHOW_ALL} ")
+                raise IndexError(f"{self.YLLOW_TEXT}Такого іменні не знайдено у вашій телефоній книзі !!!"
+                                 f"{self.DEFALUT_TEXT}{self.PISKAZKA_SHOW_ALL} ")
         except (ValueError, IndexError) as e:
             raise InputError(str(e))
 
@@ -77,9 +80,11 @@ class ContactAssistant:
         try:
             record = self.address_book.find(name)
             if record:
-                return f"{self.YLLOW_TEXT}За вказаним іменем {self.BIRUZA_TEXT}{name}{self.YLLOW_TEXT} знайдено номер{self.BIRUZA_TEXT} {record.phones[0]}{self.DEFALUT_TEXT}"
+                return (f"{self.YLLOW_TEXT}За вказаним іменем {self.BIRUZA_TEXT}{name}{self.YLLOW_TEXT} знайдено номер"
+                        f"{self.BIRUZA_TEXT} {record.phones[0]}{self.DEFALUT_TEXT}")
             else:
-                raise IndexError(f"{self.YLLOW_TEXT}Такого іменні не знайдено у вашій телефоній книзі !!!{self.DEFALUT_TEXT}{self.PISKAZKA_SHOW_ALL} ")
+                raise IndexError(f"{self.YLLOW_TEXT}Такого іменні не знайдено у вашій телефоній книзі !!!"
+                                 f"{self.DEFALUT_TEXT}{self.PISKAZKA_SHOW_ALL} ")
         except (ValueError, IndexError) as e:
             raise InputError(str(e))
 
@@ -88,10 +93,13 @@ class ContactAssistant:
         if not records:
             return f"{self.YLLOW_TEXT}Ваша телефона книга поки не містить жодного запису{self.DEFALUT_TEXT}"
         else:
-            result = f'{self.GREEN_TEXT}{"Name":<10}  {"Phone":<12}{self.YLLOW_TEXT}\n'
+            result = f'{self.GREEN_TEXT}{"Name":^10}  {"Phone":^12}{self.YLLOW_TEXT}\n'
             for record in records:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
-                result += f"{f"{record.name}":<10} {phone_numbers}\n" 
+                # result += f"{f"{record.name}":<10} {phone_numbers}\n"
+                # name = record.name.value
+                result += "{:<10}: {}\n".format(record.name.value, phone_numbers)
+
             return result.strip()
 
 
@@ -102,10 +110,11 @@ class CommandHandler:
     DEFALUT_TEXT = "\033[0m"
     PURPURE_TEXT = "\033[35m"
     BIRUZA_TEXT = "\033[36m"
-    LIST_COMANDS_BOT = ["hello", "add", "change","phone","show all",'search',"good bye", "close", "exit"]
+    LIST_COMANDS_BOT = ["hello", "add", "change", "phone", "show all", 'search', "good bye", "close", "exit"]
     DOSTUPNI_COMANDY = f"{RED_TEXT}Доступні наступні команди : {GREEN_TEXT}{LIST_COMANDS_BOT}{DEFALUT_TEXT}"
-    BAD_COMMAND_ADD = f"{YLLOW_TEXT}Невірні параметри для команди {GREEN_TEXT}add{YLLOW_TEXT} !!!.\n\
-                        {RED_TEXT}# Приклад {GREEN_TEXT}add{BIRUZA_TEXT} Імя_контакту{YLLOW_TEXT} Номер_телефону {DEFALUT_TEXT}"
+    BAD_COMMAND_ADD = (f"{YLLOW_TEXT}Невірні параметри для команди {GREEN_TEXT}add{YLLOW_TEXT} !!!.\n\
+                        {RED_TEXT}# Приклад {GREEN_TEXT}add{BIRUZA_TEXT} Імя_контакту{YLLOW_TEXT} Номер_телефону "
+                       f"{DEFALUT_TEXT}")
     
     BAD_COMMAND_CHANGE = f"{YLLOW_TEXT}Невірні параметри для команди {GREEN_TEXT}change{YLLOW_TEXT} !!!.\n\
                            {RED_TEXT}# Приклад {GREEN_TEXT}change{BIRUZA_TEXT} Імя_контакту{YLLOW_TEXT} "
@@ -115,7 +124,6 @@ class CommandHandler:
     
     BAD_COMMAND_SEARCH = f"{YLLOW_TEXT}Невірні параметри для команди {GREEN_TEXT}search{YLLOW_TEXT} !!!.\n\
                            {RED_TEXT}# Приклад {GREEN_TEXT}search{BIRUZA_TEXT} Імя_контакту{YLLOW_TEXT} "
-    
     
     def __init__(self, contact_assistant):
         self.contact_assistant = contact_assistant
@@ -169,7 +177,8 @@ class CommandHandler:
         if not matching_records:
             return f"{self.YLLOW_TEXT}Нажаль нічого не знайдено  {self.DEFALUT_TEXT}"
         else:
-            result = f"{self.YLLOW_TEXT}За Вашим запитом = {self.RED_TEXT}{query}{self.YLLOW_TEXT} було знайдено наступні записи :{self.DEFALUT_TEXT}\n"
+            result = (f"{self.YLLOW_TEXT}За Вашим запитом = {self.RED_TEXT}{query}{self.YLLOW_TEXT}"
+                      f" було знайдено наступні записи :{self.DEFALUT_TEXT}\n")
             for record in matching_records:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
                 result += f"{record.name}: {phone_numbers}\n"
@@ -187,7 +196,8 @@ class CommandHandler:
             "exit": self.handle_bye,
             "good bye": self.handle_bye,
         }
-        return actions.get(data, lambda args: f'{self.YLLOW_TEXT}Tака команда не пітримується наразі\n{self.DEFALUT_TEXT}{self.DOSTUPNI_COMANDY}')
+        return actions.get(data, lambda args: f'{self.YLLOW_TEXT}Tака команда не пітримується наразі\n'
+                                              f'{self.DEFALUT_TEXT}{self.DOSTUPNI_COMANDY}')
 
     def process_input(self, user_input):
         try:
@@ -214,6 +224,7 @@ class CommandHandler:
         except InputError as e:
             return str(e)
 
+
 class Bot:
     YLLOW_TEXT = "\033[33m"
     GREEN_TEXT = "\033[32m"
@@ -221,7 +232,7 @@ class Bot:
     DEFALUT_TEXT = "\033[0m"
     PURPURE_TEXT = "\033[35m"
     BIRUZA_TEXT = "\033[36m"
-    LIST_COMANDS_BOT = ["hello", "add", "change","phone","show all",'search',"good bye", "close", "exit"]
+    LIST_COMANDS_BOT = ["hello", "add", "change", "phone", "show all", 'search', "good bye", "close", "exit"]
     print(f'\n{YLLOW_TEXT}Вас вітає Бот для роботи з вашии контактами.')
     print(f'{RED_TEXT}Доступні наступні команди : {GREEN_TEXT}{LIST_COMANDS_BOT}{DEFALUT_TEXT}')
     
@@ -231,7 +242,7 @@ class Bot:
 
         while True:
             try:
-                user_input = input(f"{self.PURPURE_TEXT}ВВедіть команду>>{self.DEFALUT_TEXT}").lower().strip()
+                user_input = input(f"{self.PURPURE_TEXT}Введіть команду>>{self.DEFALUT_TEXT}").lower().strip()
                 result = command_handler.process_input(user_input)
 
                 if result is None:
@@ -241,5 +252,3 @@ class Bot:
 
             except Exception as e:
                 print(e)
-
-

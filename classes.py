@@ -1,10 +1,11 @@
 from datetime import datetime
 from collections import UserDict
 
+
 class Field:
     def __init__(self, value):
         if not self.is_valid(value):
-            if f"{self.__class__.__name__.lower()}" == "phone" :
+            if f"{self.__class__.__name__.lower()}" == "phone":
         
                 raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
         self.__value = value
@@ -16,7 +17,7 @@ class Field:
     @value.setter
     def value(self, new_value):
         if not self.is_valid(new_value):
-            if f"{self.__class__.__name__.lower()}" == "phone" :
+            if f"{self.__class__.__name__.lower()}" == "phone":
         
                 raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
         self.__value = new_value
@@ -32,15 +33,18 @@ class Field:
 
 
 class Name(Field):
+    # def __format__(self, format_spec):
+    #     return '{:<10}'.format(self.value)
     pass
 
 
 class Phone(Field):
     def is_valid(self, value):
-        if  (len(value) == 10 and value.isdigit()):
+        if len(value) == 10 and value.isdigit():
             return value
-        else :
+        else:
             raise ValueError(f"Invalid phone number format phone for '{value}'")
+
 
 class Birthday(Field):
     def is_valid(self, value):        
@@ -101,6 +105,7 @@ class Record:
             "birthday": self.birthday.__json__() if self.birthday else None
         }
         return record_data
+
 
 class AddressBook(UserDict):
     def search(self, query):
