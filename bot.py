@@ -1,6 +1,10 @@
+import time
 from classes import Record, AddressBook
 import json
 import os
+# from prompt_toolkit import prompt
+# from prompt_toolkit.completion import WordCompleter
+
 
 
 class InputError(Exception):
@@ -100,7 +104,6 @@ class ContactAssistant:
                 result += "{:<10}: {}\n".format(record.name.value, phone_numbers)
 
             return result.strip()
-
 
 class CommandHandler:
     YLLOW_TEXT = "\033[33m"
@@ -238,16 +241,31 @@ class Bot:
     def run(self):
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
+        # Список вариантів для автодоповнення
+        words = ['hello', 'help', 'hi', 'hey', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit']
+
+        # Створюємо комплиттер з нашими варінтами
+        # completer = WordCompleter(words, ignore_case=True)
+        
 
         while True:
             try:
+# <<<<<<< HEAD
                 user_input = input(f"{self.PURPURE_TEXT}Введіть команду>>{self.DEFALUT_TEXT}").lower().strip()
+# =======
+#                 time.sleep(2)
+                          
+                # user_input = prompt("ВВедіть команду>> ", completer=completer).lower().strip()
+                
+# >>>>>>> db1b7b732b5c52e9d733a58be9bcf377f7935df6
                 result = command_handler.process_input(user_input)
 
                 if result is None:
                     break
                 else:
                     print(result)
+                    # Добавляем паузу на 1 секунду перед возвратом к приглашению для ввода команды
+                    time.sleep(2)
 
             except Exception as e:
                 print(e)
