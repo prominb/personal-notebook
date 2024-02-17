@@ -1,11 +1,10 @@
 from datetime import datetime
 from collections import UserDict
 
-
 class Field:
     def __init__(self, value):
         if not self.is_valid(value):
-            if f"{self.__class__.__name__.lower()}" == "phone":
+            if f"{self.__class__.__name__.lower()}" == "phone" :
         
                 raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
         self.__value = value
@@ -17,7 +16,7 @@ class Field:
     @value.setter
     def value(self, new_value):
         if not self.is_valid(new_value):
-            if f"{self.__class__.__name__.lower()}" == "phone":
+            if f"{self.__class__.__name__.lower()}" == "phone" :
         
                 raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
         self.__value = new_value
@@ -33,18 +32,19 @@ class Field:
 
 
 class Name(Field):
-    # def __format__(self, format_spec):
-    #     return '{:<10}'.format(self.value)
     pass
 
 
 class Phone(Field):
     def is_valid(self, value):
-        if len(value) == 10 and value.isdigit():
+        if  (len(value) == 10 and value.isdigit()):
             return value
-        else:
+        else :
             raise ValueError(f"Invalid phone number format phone for '{value}'")
-
+# Email    
+class Email(Field):
+    def is_valid(self, value):
+        return isinstance(value, str) and '@' in value
 
 class Birthday(Field):
     def is_valid(self, value):        
@@ -59,11 +59,16 @@ class Record:
     def __init__(self, name, birthday=None):
         self.name = Name(name)
         self.phones = []
+        self.emails = []
         self.birthday = Birthday(birthday) if birthday else None
 
     def add_phone(self, phone):
         phone_obj = Phone(phone)
         self.phones.append(phone_obj)
+
+    def add_email(self, email):
+        email_obj = Email(email)
+        self.emails.append(email_obj)
 
     def remove_phone(self, phone):
         initial_len = len(self.phones)
@@ -102,10 +107,10 @@ class Record:
         record_data = {
             "name": self.name.__json__(),
             "phones": [phone.__json__() for phone in self.phones],
+            "emails": [email.__json__() for email in self.emails],
             "birthday": self.birthday.__json__() if self.birthday else None
         }
         return record_data
-
 
 class AddressBook(UserDict):
     def search(self, query):
@@ -117,11 +122,20 @@ class AddressBook(UserDict):
             for phone in record.phones:
                 if query in str(phone.value):
                     matching_records.append(record)
+            for email in record.emails:
+                if query in str(email.value):
+                    matching_records.append(record)
 
         return matching_records
     
     def add_record(self, record):
         self.data[record.name.value] = record
+
+    def find_case_insensitive(self, name):
+        for record in self.data.values():
+            if record.name.value.lower() == name.lower():
+                return record
+        return None
    
     def delete(self, name):
         if name in self.data:
