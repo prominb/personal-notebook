@@ -3,6 +3,9 @@ from colors import *
 from comands import *
 import json
 import os
+import time
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
 
 class InputError(Exception):
     pass
@@ -251,18 +254,32 @@ class Bot:
     def run(self):
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
+        # Список вариантів для автодоповнення
+        words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit']
+
+        # Створюємо комплиттер з нашими варінтами
+        completer = WordCompleter(words, ignore_case=True)
+        
 
         while True:
             try:
-                user_input = input(f"{PURPURE}Ведіть команду>>{DEFALUT}").lower().strip()
+                time.sleep(2)
+                          
+                user_input = prompt("ВВедіть команду>> ", completer=completer).lower().strip()
+                
                 result = command_handler.process_input(user_input)
 
                 if result is None:
                     break
                 else:
                     print(result)
+                    
+                    time.sleep(2)
 
             except Exception as e:
                 print(e)
+
+
+
 
 
