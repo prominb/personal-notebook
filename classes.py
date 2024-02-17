@@ -41,10 +41,13 @@ class Phone(Field):
             return value
         else :
             raise ValueError(f"Invalid phone number format phone for '{value}'")
-# Email    
+    
 class Email(Field):
     def is_valid(self, value):
         return isinstance(value, str) and '@' in value
+    
+    def __json__(self):
+        return str(self.value) if self.value else None
 
 class Birthday(Field):
     def is_valid(self, value):        

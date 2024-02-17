@@ -7,8 +7,7 @@ import os
 class InputError(Exception):
     pass
 
-class ContactAssistant:
-   
+class ContactAssistant:   
     
     def __init__(self):
         self.address_book = AddressBook()
@@ -22,30 +21,39 @@ class ContactAssistant:
             data = {
                 "records": [record.__json__() for record in self.address_book.values()]
             }
-            json.dump(data, file)
+            json.dump(data, file, indent=2)  # Установите indent=2 для форматированного вывода с отступами
+
 
     def load_data(self):
         try:
-            if os.path.getsize(self.file_path) > 0:  
+            if os.path.getsize(self.file_path) > 0:
                 with open(self.file_path, "r") as file:
                     data = json.load(file)
-                    records = [Record(record["name"], record.get("birthday")) for record in data.get("records", [])]
-                    for i, record in enumerate(records):
-                        if "phones" in data.get("records", [])[i]:
-                            for phone in data["records"][i]["phones"]:
-                                record.add_phone(phone)
+                    for record_data in data.get("records", []):
+                        name = record_data.get("name")
+                        birthday = record_data.get("birthday")
+                        record = Record(name, birthday)
+                        
+                        phones = record_data.get("phones", [])
+                        for phone in phones:
+                            record.add_phone(phone)
+                        
+                        emails = record_data.get("emails", [])
+                        for email in emails:
+                            record.add_email(email)
+                        
                         self.address_book.add_record(record)
         except (OSError, json.JSONDecodeError, KeyError) as e:
             print(f"Error loading data: {e}")
 
-
-    def add_contact(self, name, phone=None, email=None, birthday=None):
+    def add_contact(self, name, *args):
         try:
-            record = Record(name, birthday)
-            if phone:
-                record.add_phone(str(phone).strip())
-            if email:
-                record.add_email(str(email).strip())
+            record = Record(name)
+            for arg in args:
+                if arg.isdigit():
+                    record.add_phone(arg)
+                elif "@" in arg:
+                    record.add_email(arg)
             self.address_book.add_record(record)
             self.save_data()
             return f"{YLLOW}New contact successfully added!!!{PISKAZKA_SHOW_ALL}"
@@ -72,7 +80,7 @@ class ContactAssistant:
         except (ValueError, IndexError) as e:
             raise InputError(str(e))
 
-    def get_email(self, name):
+    def get_email(self, name, emails):
         try:
             record = self.address_book.find(name)
             if record and record.emails:
@@ -95,6 +103,12 @@ class ContactAssistant:
                 raise IndexError(f"{YLLOW}Такого імені не знайдено у вашій телефоній книзі !!!{DEFALUT}{PISKAZKA_SHOW_ALL}")
         except (ValueError, IndexError) as e:
             raise InputError(str(e))
+        
+    def get_email_by_email(self, email):
+        try:
+            return self.get_email(email)
+        except InputError:
+            raise InputError(f"{YLLOW}Такого імені або email не знайдено у вашій телефоній книзі !!!{DEFALUT}{PISKAZKA_SHOW_ALL}")
 
     def get_phone(self, name):
         try:
@@ -109,16 +123,17 @@ class ContactAssistant:
     def show_all_contacts(self):
         records = list(self.address_book.values())
         if not records:
-            return f"{YLLOW}Ваша телефона книга поки не містить жодного запису{DEFALUT}"
+            return f"{YLLOW}Ваша телефонная книга пока не содержит ни одной записи{DEFALUT}"
         else:
             result = f'{GREEN}{"Name":<10}  {"Phone":<12} {"Email":<20}{YLLOW}\n'
             for record in records:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
-                emails = ', '.join(str(email.value) if email.value else '' for email in record.emails)
-                result += f"{record.name}  {phone_numbers}  {emails}\n" 
+                emails = ', '.join(map(str, [email.value for email in record.emails if email.value]))
+                result += f"{record.name.value:<10}  {phone_numbers:<12} {emails:<20}\n"
             return result.strip()
 
-    
+
+
 
 class CommandHandler:
     
@@ -134,16 +149,27 @@ class CommandHandler:
             raise InputError(BAD_COMMAND_ADD)
 
         contact_info = args.split(" ")
-        if len(contact_info) not in [3, 4]:
+        
+        if len(contact_info) < 3:
             raise InputError(BAD_COMMAND_ADD)
 
-        _, name, contact_value = args.split(" ")
-        if "@" in contact_value:
-            return self.contact_assistant.add_contact(name, email=contact_value)
-        elif contact_value.isdigit():
-            return self.contact_assistant.add_contact(name, phone=contact_value)
-        else:
-            raise InputError(BAD_COMMAND_ADD)
+        _, name, *contact_values = contact_info
+        
+        phone = None
+        email = None
+
+        for contact_value in contact_values:
+            if "@" in contact_value:
+                email = contact_value
+            elif contact_value.isdigit():
+                phone = contact_value
+            else:
+                raise InputError(BAD_COMMAND_ADD)
+
+        try:
+            return self.contact_assistant.add_contact(name, phone, email)
+        except InputError as e:
+            raise InputError(str(e))
 
     def handle_change(self, args):
         if len(args) == 0:
@@ -165,11 +191,12 @@ class CommandHandler:
         if len(args.split()) < 2:
             raise InputError("BAD_COMMAND_EMAIL")
 
-        name, *emails = args.split(" ", 1)[1].strip().split(",")
-        for email in emails:
-            self.contact_assistant.add_email_to_contact(name, email.strip())
+        name_or_email, *emails = args.split(" ", 1)[1].strip().split(",")
+        
+        if '@' in name_or_email:
+            return self.contact_assistant.get_email_by_email(name_or_email.strip())
+        return self.contact_assistant.get_email(name_or_email)
 
-        return self.contact_assistant.get_email(name)
 
     def handle_phone(self, args):
         if len(args) == 0:
@@ -242,9 +269,7 @@ class CommandHandler:
         except InputError as e:
             return str(e)
 
-class Bot:
-    
-    
+class Bot:    
     print(f'\n{YLLOW}Вас вітає Бот для роботи з вашии контактами.')
     print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}{DEFALUT}')
     
