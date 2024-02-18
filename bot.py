@@ -11,14 +11,16 @@ from sorted import *
 class InputError(Exception):
     pass
 
-class ContactAssistant:   
-    
-    def __init__(self):
-        self.address_book = AddressBook()
-        self.file_path = "contacts.json"
-       
-        if os.path.exists(self.file_path):
-            self.load_data()
+class ContactAssistant:
+    upcoming_birthdays = []
+    class ContactAssistant:
+        def __init__(self):
+            self.upcoming_birthdays = []  # Змінено на екземпляр атрибуту
+            self.address_book = AddressBook()
+            self.file_path = "contacts.json"
+
+            if os.path.exists(self.file_path):
+                self.load_data()
 
     def save_data(self):
         with open(self.file_path, "w") as file:
@@ -215,6 +217,13 @@ class CommandHandler:
     def handle_bye(self, args):
         print("Good bye!")
         return None
+
+    def handle_birthdays(self, args):
+        try:
+            days = int(args.split(" ")[1])
+            return self.contact_assistant.birthdays_in_days(days)
+        except (IndexError, ValueError):
+            raise InputError("Невірний формат команди 'birthday <days>'")
     
     def handle_search(self, args):
         if len(args) == 0:
@@ -254,6 +263,7 @@ class CommandHandler:
             'search': self.handle_search,
             'email': self.handle_email,
             "show": self.handle_show,
+            "birthday": self.handle_birthdays,  # Додано обробку команди "birthday"
             "close": self.handle_bye,
             "exit": self.handle_bye,
             "good bye": self.handle_bye,
@@ -289,7 +299,7 @@ class CommandHandler:
 
 class Bot:    
     print(f'\n{YLLOW}Вас вітає Бот для роботи з вашии контактами.')
-    print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}{DEFALUT}')
+    print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT + ["birthday"]}{DEFALUT}')
     
     def run(self):
         contact_assistant = ContactAssistant()
