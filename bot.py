@@ -6,6 +6,7 @@ import os
 import time
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.input import win32 as win32_input
 from sorted import *
 
 class InputError(Exception):
@@ -309,21 +310,21 @@ class Bot:
 
         # Створюємо комплиттер з нашими варінтами
         completer = WordCompleter(words, ignore_case=True)
-        
+
 
         while True:
             try:
                 time.sleep(2)
-                          
+
                 user_input = prompt("ВВедіть команду>> ", completer=completer).lower().strip()
-                
+
                 result = command_handler.process_input(user_input)
 
                 if result is None:
                     break
                 else:
                     print(result)
-                    
+
                     time.sleep(2)
 
             except Exception as e:
