@@ -10,8 +10,7 @@ from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.input import win32 as win32_input
 from sorted import *
 import sys
-from prompt_toolkit import prompt
-from prompt_toolkit.completion import WordCompleter
+
 
 if sys.platform.startswith('win'):
     input_function = input
