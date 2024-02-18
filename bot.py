@@ -6,6 +6,7 @@ import os
 import time
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
+from sorted import *
 
 class InputError(Exception):
     pass
@@ -134,7 +135,7 @@ class ContactAssistant:
                 emails = ', '.join(map(str, [email.value for email in record.emails if email.value]))
                 result += f"{record.name.value:<10}  {phone_numbers:<12} {emails:<20}\n"
             return result.strip()
-
+    
 
 
 
@@ -230,7 +231,20 @@ class CommandHandler:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
                 result += f"{record.name}: {phone_numbers}\n"
             return result.strip()
+    
+    
+    def handle_sorted(self, args):
+        try:
+            if len(args.split()) < 2:
+                raise InputError(BAD_COMMAND_SORTED)
 
+            folder_path = args.split(" ")[1]
+            result = main(folder_path)  # Вызываем функцию clean() и сохраняем результат
+            return result  # Возвращаем результат выполнения функции clean()
+        except InputError as e:
+            raise e 
+
+    
     def choice_action(self, data):
         actions = {
             'hello': self.handle_hello,
@@ -243,6 +257,7 @@ class CommandHandler:
             "close": self.handle_bye,
             "exit": self.handle_bye,
             "good bye": self.handle_bye,
+            'sorted': self.handle_sorted,
         }
         return actions.get(data, lambda args: f'{YLLOW}Така команда не підтримується наразі\n{DEFALUT}{DOSTUPNI_COMANDY}')
 
@@ -280,7 +295,7 @@ class Bot:
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
         # Список вариантів для автодоповнення
-        words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit']
+        words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit', 'sorted']
 
         # Створюємо комплиттер з нашими варінтами
         completer = WordCompleter(words, ignore_case=True)
