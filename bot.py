@@ -1,4 +1,5 @@
 from classes import Record, AddressBook
+from datetime import datetime, timedelta
 from colors import *
 from comands import *
 import json
@@ -8,6 +9,15 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.input import win32 as win32_input
 from sorted import *
+import sys
+from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
+
+if sys.platform.startswith('win'):
+    input_function = input
+else:
+    from prompt_toolkit.input import create_input
+    input_function = create_input()
 
 class InputError(Exception):
     pass
@@ -138,7 +148,22 @@ class ContactAssistant:
                 emails = ', '.join(map(str, [email.value for email in record.emails if email.value]))
                 result += f"{record.name.value:<10}  {phone_numbers:<12} {emails:<20}\n"
             return result.strip()
-    
+
+    def birthdays_in_days(self, days):
+        current_date = datetime.now()
+        upcoming_birthdays = []
+
+        for record in self.upcoming_birthdays:
+            if record.birthday:
+                next_birthday = datetime(current_date.year, record.birthday.month, record.birthday.day)
+                if next_birthday < current_date:
+                    next_birthday = datetime(current_date.year + 1, record.birthday.month, record.birthday.day)
+
+                days_until_birthday = (next_birthday - current_date).days
+                if 0 <= days_until_birthday <= days:
+                    upcoming_birthdays.append((record.name.value, days_until_birthday))
+
+        return upcoming_birthdays
 
 
 
@@ -221,10 +246,23 @@ class CommandHandler:
 
     def handle_birthdays(self, args):
         try:
-            days = int(args.split(" ")[1])
-            return self.contact_assistant.birthdays_in_days(days)
+            if len(args.split()) < 2:
+                raise InputError(BAD_COMMAND_BIRTHDAYS)
+
+            _, days = args.split(" ", 1)
+            days = int(days)
+
+            result = self.contact_assistant.birthdays_in_days(days)
+            if not result:
+                return f"{YLLOW}Немає жодних днів народження наступні {days} днів.{DEFALUT}"
+            else:
+                output = f"{YLLOW}Найближчі дні народження протягом наступних {days} днів:{DEFALUT}\n"
+                for name, days_until_birthday in result:
+                    output += f"{BIRUZA}{name}{DEFALUT} - {RED}{days_until_birthday}{DEFALUT} днів\n"
+                return output.strip()
+
         except (IndexError, ValueError):
-            raise InputError("Невірний формат команди 'birthday <days>'")
+            raise InputError(BAD_COMMAND_BIRTHDAYS)
     
     def handle_search(self, args):
         if len(args) == 0:
@@ -316,7 +354,8 @@ class Bot:
             try:
                 time.sleep(2)
 
-                user_input = prompt("ВВедіть команду>> ", completer=completer).lower().strip()
+                # user_input = prompt("ВВедіть команду>> ", completer=completer).lower().strip()
+                user_input = input_function("Введіть команду: ").lower().strip()
 
                 result = command_handler.process_input(user_input)
 

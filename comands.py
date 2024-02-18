@@ -18,4 +18,4 @@ BAD_COMMAND_SEARCH = f"{YLLOW}Невірні параметри для кома�
 BAD_COMMAND_SORTED = f"{YLLOW}Невірні параметри для команди {GREEN}sorted{YLLOW} !!!.\n\
                         {RED}# Приклад {GREEN}sorted{BIRUZA} Шлях_до_папки{YLLOW}"
 BAD_COMMAND_BIRTHDAYS = (f"{YLLOW} Невірні параметри для команди {GREEN}birthdays{YLLOW}!!!.\n\
-                            {RED}# Приклад {GREEN}birthdays{BIRUZA} Імя_контакту{YLLOW} ")
+                            {RED}# Приклад {GREEN}birthday{BIRUZA} Кількість_днів{YLLOW} ")
