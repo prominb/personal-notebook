@@ -1,6 +1,7 @@
 import json
 from textwrap import wrap
 from colors import *
+from datetime import datetime
 
 def load_notes():
     try:
@@ -23,7 +24,8 @@ def add_note():
     tags = input("Введіть теги (через пробіл): ").split()
     
     notes = load_notes()
-    notes.append({'title': title, 'content': content, 'tags': tags})
+    modified = datetime.strftime(datetime.now(), "%d/%m/%Y, %H:%M")
+    notes.append({'title': title, 'content': content, 'tags': tags, 'modified': modified})
     save_notes(notes)
     print("Нотатка додана успішно!")
 
@@ -115,6 +117,7 @@ def display_note(title):
             print(f"Заголовок: {note['title']}")
             print(f"Текст: {note['content']}")
             print(f"Теги: {', '.join(note['tags'])}")
+            print(f"Змінено: {note['modified']}")
             return
 
     print(f"Нотатка з заголовком '{title}' не знайдена.")
@@ -128,15 +131,16 @@ def display_notes_in_table(notes):
         'title': max(len(note['title']) for note in notes),
         'content': max(len(note['content']) for note in notes),
         'tags': max(len(', '.join(note['tags'])) for note in notes),
+        'modified': max(len(note['modified']) for note in notes),
     }
 
     print("\nНотатки:")
     print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
-    print(f"| {'Заголовок': <{column_widths['title']}} | {'Текст': <{column_widths['content']}} | {'Теги': <{column_widths['tags']}} |")
+    print(f"| {'Заголовок': <{column_widths['title']}} | {'Текст': <{column_widths['content']}} | {'Теги': <{column_widths['tags']}} | {'Змінено': <{column_widths['modified']}} |")
     print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
     
     for note in notes:
-        print(f"| {note['title']: <{column_widths['title']}} | {note['content']: <{column_widths['content']}} | {', '.join(note['tags']): <{column_widths['tags']}} |")
+        print(f"| {note['title']: <{column_widths['title']}} | {note['content']: <{column_widths['content']}} | {', '.join(note['tags']): <{column_widths['tags']}} | {note['modified']: <{column_widths['modified']}} |")
 
     print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
 
