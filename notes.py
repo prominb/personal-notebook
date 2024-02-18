@@ -1,4 +1,5 @@
 import json
+from textwrap import wrap
 from colors import *
 
 def load_notes():
@@ -12,6 +13,9 @@ def load_notes():
 def save_notes(notes):
     with open('notes.json', 'w') as file:
         json.dump(notes, file, indent=2)
+
+def wrap_text(text, width):
+    return '\n'.join(wrap(text, width))
 
 def add_note():
     title = input("Введіть заголовок нотатки: ")
@@ -46,6 +50,28 @@ def filter_by_tag(tag):
             print("---")
     else:
         print(f"Нотаток з тегом '{tag}' не знайдено.")
+
+def display_all_notes():
+    notes = load_notes()
+    display_notes_in_table(notes)
+
+def display_notes_by_tag(tag):
+    notes = load_notes()
+    filtered_notes = [note for note in notes if tag in note['tags']]
+    display_notes_in_table(filtered_notes)
+
+def display_notes_by_tags_in_table(tags):
+    notes = load_notes()
+    filtered_notes = [note for note in notes if all(tag in note['tags'] for tag in tags)]
+    display_notes_in_table(filtered_notes)
+
+def display_note_by_title(title):
+    notes = load_notes()
+    for note in notes:
+        if note['title'] == title:
+            display_notes_in_table([note])
+            return
+    print(f"Нотатка з заголовком '{title}' не знайдена.")
 
 def edit_note():
     notes = load_notes()
@@ -93,16 +119,40 @@ def display_note(title):
 
     print(f"Нотатка з заголовком '{title}' не знайдена.")
 
+def display_notes_in_table(notes):
+    if not notes:
+        print("Список нотаток порожній.")
+        return
+
+    column_widths = {
+        'title': max(len(note['title']) for note in notes),
+        'content': max(len(note['content']) for note in notes),
+        'tags': max(len(', '.join(note['tags'])) for note in notes),
+    }
+
+    print("\nНотатки:")
+    print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
+    print(f"| {'Заголовок': <{column_widths['title']}} | {'Текст': <{column_widths['content']}} | {'Теги': <{column_widths['tags']}} |")
+    print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
+    
+    for note in notes:
+        print(f"| {note['title']: <{column_widths['title']}} | {note['content']: <{column_widths['content']}} | {', '.join(note['tags']): <{column_widths['tags']}} |")
+
+    print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
+
+
 def main():
     while True:
         print(f"{GREEN}\n1. Додати нотатку")
         print(f"2. Пошук нотаток")
         print(f"3. Редагувати нотатку")
         print(f"{RED}4. Видалити нотатку{DEFALUT}")
-        print(f"{GREEN}5. Вивести нотатку в консоль")
-        print(f"6. Фільтрувати нотатки за тегом")
-        print(f"{RED}7. Вийти{DEFALUT}")
-        
+        print(f"{GREEN}5. Вивести всі нотатки в консоль")
+        print(f"6. Вивести одну нотатку за заголовком")
+        print(f"7. Вивести нотатку(-и) за тегом")
+        print(f"8. Вивести нотатку за тегами в таблице")
+        print(f"{RED}9. Вийти{DEFALUT}")
+
         choice = input("Введіть номер опції: ")
 
         if choice == '1':
@@ -115,12 +165,17 @@ def main():
         elif choice == '4':
             delete_note()
         elif choice == '5':
-            title_to_display = input("Введіть заголовок нотатки для виведення в консоль: ")
-            display_note(title_to_display)
+            display_all_notes()
         elif choice == '6':
-            tag_to_filter = input("Введіть тег для фільтрації нотаток: ")
-            filter_by_tag(tag_to_filter)
+            title_to_display = input("Введіть заголовок нотатки для виведення в консоль: ")
+            display_note_by_title(title_to_display)
         elif choice == '7':
+            tag_to_display = input("Введіть тег для виведення нотаток: ")
+            display_notes_by_tag(tag_to_display)
+        elif choice == '8':
+            tags_to_display = input("Введіть теги через пробіл для виведення нотаток в таблице: ").split()
+            display_notes_by_tags_in_table(tags_to_display)
+        elif choice == '9':
             break
         else:
             print("Невірний вибір. Спробуйте ще раз.")
