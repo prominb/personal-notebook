@@ -7,6 +7,7 @@ import time
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from sorted import *
+from notes import *
 
 class InputError(Exception):
     pass
@@ -134,9 +135,7 @@ class ContactAssistant:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
                 emails = ', '.join(map(str, [email.value for email in record.emails if email.value]))
                 result += f"{record.name.value:<10}  {phone_numbers:<12} {emails:<20}\n"
-            return result.strip()
-    
-
+            return result.strip()   
 
 
 class CommandHandler:
@@ -230,8 +229,7 @@ class CommandHandler:
             for record in matching_records:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
                 result += f"{record.name}: {phone_numbers}\n"
-            return result.strip()
-    
+            return result.strip()    
     
     def handle_sorted(self, args):
         try:
@@ -243,8 +241,46 @@ class CommandHandler:
             return result  # Возвращаем результат выполнения функции clean()
         except InputError as e:
             raise e 
-
     
+    def handle_notes(self, args):
+        try:
+            if len(args.split()) < 1:
+                raise InputError(BAD_COMMAND_NOTES)
+
+            print(f"{GREEN}\n1. Додати нотатку")
+            print(f"2. Пошук нотаток")
+            print(f"3. Редагувати нотатку")
+            print(f"{RED}4. Видалити нотатку{DEFALUT}")
+            print(f"{GREEN}5. Вивести нотатку в консоль")
+            print(f"6. Фільтрувати нотатки за тегом")
+            print(f"{RED}7. Вийти{DEFALUT}")
+
+            choice = input("Введіть номер опції: ")
+
+            if choice == '1':
+                self.add_note()
+            elif choice == '2':
+                query = input("Введіть запит для пошуку: ")
+                self.search_notes(query)
+            elif choice == '3':
+                self.edit_note()
+            elif choice == '4':
+                self.delete_note()
+            elif choice == '5':
+                title_to_display = input("Введіть заголовок нотатки для виведення в консоль: ")
+                self.display_note(title_to_display)
+            elif choice == '6':
+                tag_to_filter = input("Введіть тег для фільтрації нотаток: ")
+                self.filter_by_tag(tag_to_filter)
+            elif choice == '7':
+                return None  # Додайте це, щоб вийти із функції
+            else:
+                print("Невірний вибір. Спробуйте ще раз.")
+
+        except InputError as e:
+            raise e
+   
+
     def choice_action(self, data):
         actions = {
             'hello': self.handle_hello,
@@ -258,6 +294,7 @@ class CommandHandler:
             "exit": self.handle_bye,
             "good bye": self.handle_bye,
             'sorted': self.handle_sorted,
+            'notes': self.handle_notes,
         }
         return actions.get(data, lambda args: f'{YLLOW}Така команда не підтримується наразі\n{DEFALUT}{DOSTUPNI_COMANDY}')
 
@@ -305,7 +342,7 @@ class Bot:
             try:
                 time.sleep(2)
                           
-                user_input = prompt("ВВедіть команду>> ", completer=completer).lower().strip()
+                user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
                 
                 result = command_handler.process_input(user_input)
 
