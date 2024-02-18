@@ -13,12 +13,12 @@
 
 ### Структура проекту
 
-├── bot.py
-├── main.py
-├── notes.py
-├── sorted.py
-├── colors.py
-└── classes.py
+├── bot.py  
+├── main.py  
+├── notes.py  
+├── sorted.py  
+├── colors.py  
+└── classes.py  
 
 <a name='опис'></a>
 
