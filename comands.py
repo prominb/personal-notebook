@@ -22,5 +22,5 @@ BAD_COMMAND_SORTED = f"{YLLOW}Невірні параметри для кома�
 BAD_COMMAND_NOTES = f"{YLLOW}Невірні параметри для команди {GREEN}notes{YLLOW} !!!.\n\
                         {RED}# Приклад {GREEN}notes{BIRUZA}"
 
-BAD_COMMAND_BIRTHDAY = f"{YLLOW}Невірні параметри для команди {GREEN}phone{YLLOW} !!!.\n\
+BAD_COMMAND_BIRTHDAYS = f"{YLLOW}Невірні параметри для команди {GREEN}phone{YLLOW} !!!.\n\
                            {RED}# Приклад {GREEN}phone{BIRUZA} Імя_контакту{YLLOW} "
