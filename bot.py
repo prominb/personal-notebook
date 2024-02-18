@@ -295,7 +295,7 @@ class Bot:
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
         # Список вариантів для автодоповнення
-        words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit', 'sorted']
+        words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit', 'sorted', 'notes']
 
         # Створюємо комплиттер з нашими варінтами
         completer = WordCompleter(words, ignore_case=True)
