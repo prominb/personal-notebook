@@ -31,13 +31,18 @@ def add_note():
 
 def search_notes(query):
     notes = load_notes()
-    found_notes = [note for note in notes if query in note['title'] or query in note['content'] or query in note['tags']]
+    # found_notes = [note for note in notes if query in note['title'] or query in note['content'] or query in note['tags']]
+    # Переробив пошук
+    found_notes = [note for note in notes if query.lower() in note['title'].lower() or query.lower() in note['content'].lower()]
     
     if found_notes:
-        print("Знайдені нотатки:")
-        for note in found_notes:
-            display_note(note['title'])
-            print("---")
+        # print("Знайдені нотатки:")
+        # for note in found_notes:
+        #     display_note(note['title'])
+        #     print("---")
+
+        # Переробив тут вивід під таблицю
+        display_notes_in_table(found_notes)
     else:
         print("Нотаток не знайдено.")
 
@@ -46,10 +51,13 @@ def filter_by_tag(tag):
     filtered_notes = [note for note in notes if tag in note['tags']]
 
     if filtered_notes:
-        print(f"Нотатки з тегом '{tag}':")
-        for note in filtered_notes:
-            display_note(note['title'])
-            print("---")
+        # print(f"Нотатки з тегом '{tag}':")
+        # for note in filtered_notes:
+        #     display_note(note['title'])
+        #     print("---")
+
+        # Переробив тут вивід під таблицю
+        display_notes_in_table(filtered_notes)
     else:
         print(f"Нотаток з тегом '{tag}' не знайдено.")
 
@@ -70,7 +78,7 @@ def display_notes_by_tags_in_table(tags):
 def display_note_by_title(title):
     notes = load_notes()
     for note in notes:
-        if note['title'] == title:
+        if note['title'].lower() == title.lower():
             display_notes_in_table([note])
             return
     print(f"Нотатка з заголовком '{title}' не знайдена.")
@@ -119,6 +127,11 @@ def display_note(title):
             print(f"Теги: {', '.join(note['tags'])}")
             print(f"Змінено: {note['modified']}")
             return
+
+    # # Переробив вивід нотатків
+    # for note in notes:
+    #     if note['title'] == title:
+    #         pass
 
     print(f"Нотатка з заголовком '{title}' не знайдена.")
 
