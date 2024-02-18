@@ -16,9 +16,10 @@ class Field:
     @value.setter
     def value(self, new_value):
         if not self.is_valid(new_value):
-            if f"{self.__class__.__name__.lower()}" == "phone" :
+            # if f"{self.__class__.__name__.lower()}" == "phone" :
         
-                raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
+            #     raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
+            raise ValueError
         self.__value = new_value
 
     def __str__(self):
@@ -32,38 +33,77 @@ class Field:
 
 
 class Name(Field):
-    pass
-
-
-class Phone(Field):
     def is_valid(self, value):
-        if  (len(value) == 10 and value.isdigit()):
-            return value
-        else :
-            raise ValueError(f"Invalid phone number format phone for '{value}'")
+        return isinstance(value, str) and value
+
+# class Phone(Field):
+#     def is_valid(self, value):
+#         if  (len(value) == 10 and value.isdigit()):
+#             return value
+#         else :
+#             raise ValueError(f"Не вірний номер телефона {value}.\n Номер може містити тільки 10 цифри!!! Приклад - 0931245891")
+class Phone(Field):
+    def __init__(self, value):
+        if not self.is_valid(value):
+            raise ValueError(f"Не вірний номер телефона {value}.\n Номер може містити тільки 10 цифри!!! Приклад - 0931245891")
+        super().__init__(value)
+
+    def is_valid(self, value):
+        return isinstance(value, str) and value.isdigit() and len(value) == 10
     
 class Email(Field):
+
+    def __init__(self, value):
+        if not self.is_valid(value):
+            raise ValueError(f"Не вірний формат e-mail {value}.\n Приклад - python@gmail.com")
+        super().__init__(value)
+
     def is_valid(self, value):
         return isinstance(value, str) and '@' in value
     
     def __json__(self):
         return str(self.value) if self.value else None
+    
+class Address(Field):
+
+    def is_valid(self, value):
+        return isinstance(value, str) and value
+    
+    def __json__(self):
+        return str(self.value) if self.value else None
 
 class Birthday(Field):
-    def is_valid(self, value):        
+    def __init__(self, value=None):
+        if not self.is_valid(value):
+            raise ValueError("Не вірний формат дати народження. Використовуйте YYYY-MM-DD.")
+        super().__init__(value)
+
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        if not self.is_valid(new_value):
+            raise ValueError("Не вірний формат дати народження. Використовуйте YYYY-MM-DD.")
+        datetime.strptime(new_value, "%Y-%m-%d")
+        self.__value = new_value
+
+    def is_valid(self, value):
         try:
             datetime.strptime(value, "%Y-%m-%d")
-            return True
         except ValueError:
             return False
-
+        else:
+            return True
 
 class Record:
-    def __init__(self, name, birthday=None):
+    def __init__(self, name, birthday=None, address=None):
         self.name = Name(name)
         self.phones = []
         self.emails = []
         self.birthday = Birthday(birthday) if birthday else None
+        self.address = Address(address) if address else None
 
     def add_phone(self, phone):
         phone_obj = Phone(phone)
@@ -72,6 +112,12 @@ class Record:
     def add_email(self, email):
         email_obj = Email(email)
         self.emails.append(email_obj)
+        
+    def set_birthday(self, birthday):
+        self.birthday = Birthday(birthday)
+
+    def set_address(self, address):
+        self.address = Address(address)
 
     def remove_phone(self, phone):
         initial_len = len(self.phones)
@@ -111,9 +157,23 @@ class Record:
             "name": self.name.__json__(),
             "phones": [phone.__json__() for phone in self.phones],
             "emails": [email.__json__() for email in self.emails],
-            "birthday": self.birthday.__json__() if self.birthday else None
+            "birthday": self.birthday.__json__() if self.birthday else None,
+            "address": self.address.__json__() if self.address else None
         }
         return record_data
+
+    def __str__(self):
+        # if self.birthday:
+        #     return (f"{str(self.name.value)}, {str(self.birthday.value)},"
+        #             f" {'; '.join(str(p.value) for p in self.phones)},"
+        #             f" {'; '.join(str(p.value) for p in self.emails)}")
+        # else:
+        #     return (f"Contact name: {str(self.name.value)},"
+        #             f" phones: {'; '.join(str(p.value) for p in self.phones)}")
+        return (f"{str(self.name.value)}, {str(self.address.value)}, {str(self.birthday.value)},"
+                f" {'; '.join(str(p.value) for p in self.phones)},"
+                f" {'; '.join(str(p.value) for p in self.emails)}")
+
 
 class AddressBook(UserDict):
     def search(self, query):
@@ -128,6 +188,8 @@ class AddressBook(UserDict):
             for email in record.emails:
                 if query in str(email.value):
                     matching_records.append(record)
+            if query.lower() in record.address.value.lower():
+                matching_records.append(record)
 
         return matching_records
     

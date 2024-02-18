@@ -60,10 +60,14 @@ class ContactAssistant:
         try:
             record = Record(name)
             for arg in args:
-                if arg.isdigit():
+                if arg == 'phone':
                     record.add_phone(arg)
-                elif "@" in arg:
+                elif arg == 'email':
                     record.add_email(arg)
+                elif arg == 'birthday':
+                    record.set_birthday(arg)
+                elif arg == 'address':
+                    record.set_address(arg)
             self.address_book.add_record(record)
             self.save_data()
             return f"{YLLOW}New contact successfully added!!!{PISKAZKA_SHOW_ALL}"
@@ -133,7 +137,7 @@ class ContactAssistant:
     def show_all_contacts(self):
         records = list(self.address_book.values())
         if not records:
-            return f"{YLLOW}Ваша телефонная книга пока не содержит ни одной записи{DEFALUT}"
+            return f"{YLLOW}Ваша телефонна книга поки не містить жодного конткту{DEFALUT}"
         else:
             result = f'{GREEN}{"Name":<10}  {"Phone":<12} {"Email":<20}{YLLOW}\n'
             for record in records:
@@ -146,7 +150,6 @@ class ContactAssistant:
 
 
 class CommandHandler:
-    
     
     def __init__(self, contact_assistant):
         self.contact_assistant = contact_assistant
@@ -167,17 +170,24 @@ class CommandHandler:
         
         phone = None
         email = None
+        address = None
+        birthay = None
 
         for contact_value in contact_values:
-            if "@" in contact_value:
+            parameter, val = contact_value.split('=')
+            if parameter == 'email':
                 email = contact_value
-            elif contact_value.isdigit():
+            elif parameter == 'phone':
                 phone = contact_value
+            elif parameter == 'address':
+                address = contact_value
+            elif parameter == 'birthday':
+                birthay = contact_value
             else:
                 raise InputError(BAD_COMMAND_ADD)
 
         try:
-            return self.contact_assistant.add_contact(name, phone, email)
+            return self.contact_assistant.add_contact(name=name, phone=phone, email=email, address=address, birthay=birthay)
         except InputError as e:
             raise InputError(str(e))
 
@@ -206,7 +216,6 @@ class CommandHandler:
         if '@' in name_or_email:
             return self.contact_assistant.get_email_by_email(name_or_email.strip())
         return self.contact_assistant.get_email(name_or_email)
-
 
     def handle_phone(self, args):
         if len(args) == 0:
@@ -360,10 +369,10 @@ class Bot:
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
         # Список вариантів для автодоповнення
-        words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit', 'sorted', 'notes']
+        # words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close', 'exit', 'sorted', 'notes']
 
         # Створюємо комплиттер з нашими варінтами
-        completer = WordCompleter(words, ignore_case=True)
+        completer = WordCompleter(LIST_COMANDS_BOT, ignore_case=True)
 
 
         while True:
@@ -372,7 +381,6 @@ class Bot:
 
                 user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
                 
-
                 result = command_handler.process_input(user_input)
 
                 if result is None:
@@ -384,8 +392,3 @@ class Bot:
 
             except Exception as e:
                 print(e)
-
-
-
-
-
