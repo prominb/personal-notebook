@@ -1,6 +1,7 @@
 import json
 from colors import *
 
+
 def load_notes():
     try:
         with open('notes.json', 'r') as file:
@@ -9,9 +10,11 @@ def load_notes():
         notes = []
     return notes
 
+
 def save_notes(notes):
     with open('notes.json', 'w') as file:
         json.dump(notes, file, indent=2)
+
 
 def add_note():
     title = input("Введіть заголовок нотатки: ")
@@ -22,6 +25,7 @@ def add_note():
     notes.append({'title': title, 'content': content, 'tags': tags})
     save_notes(notes)
     print("Нотатка додана успішно!")
+
 
 def search_notes(query):
     notes = load_notes()
@@ -35,6 +39,7 @@ def search_notes(query):
     else:
         print("Нотаток не знайдено.")
 
+
 def filter_by_tag(tag):
     notes = load_notes()
     filtered_notes = [note for note in notes if tag in note['tags']]
@@ -46,6 +51,7 @@ def filter_by_tag(tag):
             print("---")
     else:
         print(f"Нотаток з тегом '{tag}' не знайдено.")
+
 
 def edit_note():
     notes = load_notes()
@@ -67,6 +73,7 @@ def edit_note():
             return
 
     print(f"Нотатка з заголовком '{title_to_edit}' не знайдена.")
+
 
 def delete_note():
     notes = load_notes()
