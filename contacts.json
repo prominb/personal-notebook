@@ -98,6 +98,17 @@
       ],
       "birthday": "1985-02-15",
       "address": null
+    },
+    {
+      "name": "romaro",
+      "phones": [
+        "0508885522"
+      ],
+      "emails": [
+        "romaroma@roma.com"
+      ],
+      "birthday": "1985-05-25",
+      "address": "kharkiv"
     }
   ]
 }
