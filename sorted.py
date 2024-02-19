@@ -3,7 +3,7 @@ from pathlib import Path
 import uuid
 import shutil
 
-# Словарь для транслитерации кириллических символов
+
 CYRILLIC_SYMBOLS = "абвгґдеёєжзиіїйклмнопрстуфхцчшщъыьэюя"
 TRANSLATION = ("a", "b", "v", "h", "g", "d", "e", "e", "ie" "zh", "z",
                "y", "i", "yi", "y", "j", "k", "l", "m", "n", "o", "p",
