@@ -15,9 +15,12 @@
 
 packaging_tutorial/
 ├── LICENSE
+├── LICENSE
 ├── setup.py
 ├── README.md
 ├── src/
+|    ├── test.py  
+|    ├── test2.py  
 │   ├── __init__.py
 │   ├── bot.py
 │   ├── main.py
