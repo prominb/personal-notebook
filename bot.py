@@ -365,7 +365,7 @@ class Bot:
 
     def run(self):
         print(f'\n{YLLOW}Вас вітає Бот для роботи з вашими контактами.')
-        print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT + ["birthday"]}{DEFALUT}')
+        print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}')
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
         # Список вариантів для автодоповнення
