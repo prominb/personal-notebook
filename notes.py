@@ -3,6 +3,7 @@ from textwrap import wrap
 from colors import *
 from datetime import datetime
 
+
 def load_notes():
     try:
         with open('notes.json', 'r') as file:
@@ -10,6 +11,7 @@ def load_notes():
     except FileNotFoundError:
         notes = []
     return notes
+
 
 def save_notes(notes):
     with open('notes.json', 'w') as file:
@@ -29,6 +31,7 @@ def add_note():
     save_notes(notes)
     print("Нотатка додана успішно!")
 
+
 def search_notes(query):
     notes = load_notes()
     # Переробив пошук
@@ -42,6 +45,7 @@ def search_notes(query):
         display_notes_in_table(found_notes)
     else:
         print("Нотаток не знайдено.")
+
 
 def filter_by_tag(tag):
     notes = load_notes()
@@ -96,6 +100,7 @@ def edit_note():
             return
 
     print(f"Нотатка з заголовком '{title_to_edit}' не знайдена.")
+
 
 def delete_note():
     notes = load_notes()

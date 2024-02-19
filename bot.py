@@ -1,4 +1,5 @@
 from classes import Record, AddressBook
+from datetime import datetime, timedelta
 from colors import *
 from comands import *
 import json
@@ -6,18 +7,22 @@ import os
 import time
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.input import win32 as win32_input
 from sorted import *
 from notes import run_notes
+
 
 class InputError(Exception):
     pass
 
-class ContactAssistant:   
-    
+class ContactAssistant:
+    upcoming_birthdays = []
+    # class ContactAssistant:
     def __init__(self):
+        self.upcoming_birthdays = []  # Змінено на екземпляр атрибуту
         self.address_book = AddressBook()
         self.file_path = "contacts.json"
-       
+
         if os.path.exists(self.file_path):
             self.load_data()
 
@@ -135,7 +140,9 @@ class ContactAssistant:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
                 emails = ', '.join(map(str, [email.value for email in record.emails if email.value]))
                 result += f"{record.name.value:<10}  {phone_numbers:<12} {emails:<20}\n"
+
             return result.strip()   
+
 
 
 class CommandHandler:
@@ -214,6 +221,26 @@ class CommandHandler:
     def handle_bye(self, args):
         print("Good bye!")
         return None
+
+    def handle_birthdays(self, args):
+        try:
+            if len(args.split()) < 2:
+                raise InputError(BAD_COMMAND_BIRTHDAYS)
+
+            _, days = args.split(" ", 1)
+            days = int(days)
+
+            result = self.contact_assistant.birthdays_in_days(days)
+            if not result:
+                return f"{YLLOW}Немає жодних днів народження наступні {days} днів.{DEFALUT}"
+            else:
+                output = f"{YLLOW}Найближчі дні народження протягом наступних {days} днів:{DEFALUT}\n"
+                for name, days_until_birthday in result:
+                    output += f"{BIRUZA}{name}{DEFALUT} - {RED}{days_until_birthday}{DEFALUT} днів\n"
+                return output.strip()
+
+        except (IndexError, ValueError):
+            raise InputError(BAD_COMMAND_BIRTHDAYS)
     
     def handle_search(self, args):
         if len(args) == 0:
@@ -254,6 +281,7 @@ class CommandHandler:
             'search': self.handle_search,
             'email': self.handle_email,
             "show": self.handle_show,
+            "birthday": self.handle_birthdays,  # Додано обробку команди "birthday"
             "close": self.handle_bye,
             "exit": self.handle_bye,
             "good bye": self.handle_bye,
@@ -290,7 +318,7 @@ class CommandHandler:
 
 class Bot:    
     print(f'\n{YLLOW}Вас вітає Бот для роботи з вашии контактами.')
-    print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}{DEFALUT}')
+    print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT + ["birthday"]}{DEFALUT}')
     
     def run(self):
         contact_assistant = ContactAssistant()
@@ -300,21 +328,22 @@ class Bot:
 
         # Створюємо комплиттер з нашими варінтами
         completer = WordCompleter(words, ignore_case=True)
-        
+
 
         while True:
             try:
                 time.sleep(2)
-                          
+
                 user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
                 
+
                 result = command_handler.process_input(user_input)
 
                 if result is None:
                     break
                 else:
                     print(result)
-                    
+
                     time.sleep(2)
 
             except Exception as e:
