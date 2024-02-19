@@ -9,8 +9,7 @@ from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit.input import win32 as win32_input
 from sorted import *
-
-from notes import *
+from notes import run_notes
 
 
 class InputError(Exception):
@@ -291,43 +290,8 @@ class CommandHandler:
             raise e 
     
     def handle_notes(self, args):
-        try:
-            if len(args.split()) < 1:
-                raise InputError(BAD_COMMAND_NOTES)
+        run_notes()
 
-            print(f"{GREEN}\n1. Додати нотатку")
-            print(f"2. Пошук нотаток")
-            print(f"3. Редагувати нотатку")
-            print(f"{RED}4. Видалити нотатку{DEFALUT}")
-            print(f"{GREEN}5. Вивести нотатку в консоль")
-            print(f"6. Фільтрувати нотатки за тегом")
-            print(f"{RED}7. Вийти{DEFALUT}")
-
-            choice = input("Введіть номер опції: ")
-
-            if choice == '1':
-                self.add_note()
-            elif choice == '2':
-                query = input("Введіть запит для пошуку: ")
-                self.search_notes(query)
-            elif choice == '3':
-                self.edit_note()
-            elif choice == '4':
-                self.delete_note()
-            elif choice == '5':
-                title_to_display = input("Введіть заголовок нотатки для виведення в консоль: ")
-                self.display_note(title_to_display)
-            elif choice == '6':
-                tag_to_filter = input("Введіть тег для фільтрації нотаток: ")
-                self.filter_by_tag(tag_to_filter)
-            elif choice == '7':
-                return None  # Додайте це, щоб вийти із функції
-            else:
-                print("Невірний вибір. Спробуйте ще раз.")
-
-        except InputError as e:
-            raise e
-   
     def choice_action(self, data):
         actions = {
             'hello': self.handle_hello,
