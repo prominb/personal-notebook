@@ -13,12 +13,21 @@
 
 ### Структура проекту
 
-├── bot.py  
-├── main.py  
-├── notes.py  
-├── sorted.py  
-├── colors.py  
-└── classes.py
+packaging_tutorial/
+├── LICENSE
+├── setup.py
+├── README.md
+├── src/
+│   ├── __init__.py
+│   ├── bot.py
+│   ├── main.py
+│   ├── notes.py
+│   ├── sorted.py
+│   ├── colors.py
+│   ├── comands.py
+│   └── classes.py
+└── tests/
+
 
 <a name='опис'></a>
 
