@@ -156,7 +156,7 @@ def display_notes_in_table(notes):
     print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
 
 
-def main():
+def run_notes():
     while True:
         print(f"{GREEN}\n1. Додати нотатку")
         print(f"2. Пошук нотаток")
@@ -194,6 +194,11 @@ def main():
             break
         else:
             print("Невірний вибір. Спробуйте ще раз.")
+
+
+def main():
+    run_notes()
+
 
 if __name__ == "__main__":
     main()
