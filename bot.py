@@ -17,6 +17,24 @@ class InputError(Exception):
 
 
 class ContactAssistant:
+    def birthdays_in_days(self, days):
+        upcoming_birthdays = []
+
+        today = datetime.now().date()
+
+        for record in self.address_book.values():
+            if record.birthday:
+                birthday_date = datetime.strptime(record.birthday.value, "%Y-%m-%d").date()
+                next_birthday = datetime(today.year, birthday_date.month, birthday_date.day).date()
+
+                if today > next_birthday:
+                    next_birthday = datetime(today.year + 1, birthday_date.month, birthday_date.day).date()
+
+                days_left = (next_birthday - today).days
+                if 0 < days_left <= days:
+                    upcoming_birthdays.append((record.name.value, days_left))
+
+        return upcoming_birthdays
 
     def __init__(self):
         # self.upcoming_birthdays = []  # Змінено на екземпляр атрибуту
@@ -244,6 +262,10 @@ class CommandHandler:
 
     def handle_birthdays(self, args):
         try:
+            if args.strip().lower() == 'birthday':
+                return f"{YLLOW}Невірні параметри для команди {BIRUZA}birthday{YLLOW}!!!.\n" \
+                       f"{DEFALUT}# Приклад {BIRUZA}birthday{DEFALUT} кількість днів."
+
             if len(args.split()) < 2:
                 raise InputError(BAD_COMMAND_BIRTHDAYS)
 
@@ -261,9 +283,9 @@ class CommandHandler:
 
         except (IndexError, ValueError):
             raise InputError(BAD_COMMAND_BIRTHDAYS)
-    
+
     def handle_search(self, args):
-        if len(args) == 0:
+        if len(args)  ==0:
             raise InputError(BAD_COMMAND_SEARCH)
 
         query = args.split(" ", 1)[1]
