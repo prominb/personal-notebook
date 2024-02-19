@@ -389,7 +389,6 @@ class Bot:
 
         while True:
             try:
-                time.sleep(2)
 
                 user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
                 
@@ -399,8 +398,6 @@ class Bot:
                     break
                 else:
                     print(result)
-
-                    time.sleep(2)
 
             except Exception as e:
                 print(e)
