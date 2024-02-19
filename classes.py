@@ -1,13 +1,15 @@
 from datetime import datetime
 from collections import UserDict
 
+
 class Field:
     def __init__(self, value):
         if not self.is_valid(value):
-            if f"{self.__class__.__name__.lower()}" == "phone" :
-        
-                raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
-        self.__value = value
+            # if f"{self.__class__.__name__.lower()}" == "phone":
+            #
+            #     raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
+            raise ValueError
+        self.value = value
 
     @property
     def value(self):
@@ -16,9 +18,6 @@ class Field:
     @value.setter
     def value(self, new_value):
         if not self.is_valid(new_value):
-            # if f"{self.__class__.__name__.lower()}" == "phone" :
-        
-            #     raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
             raise ValueError
         self.__value = new_value
 
@@ -26,8 +25,8 @@ class Field:
         return str(self.value)
 
     def is_valid(self, value):
-        return isinstance(value, (int, float, str))
-    
+        # return isinstance(value, (int, float, str))
+        return True
     def __json__(self):
         return self.value
 
@@ -42,15 +41,19 @@ class Name(Field):
 #             return value
 #         else :
 #             raise ValueError(f"Не вірний номер телефона {value}.\n Номер може містити тільки 10 цифри!!! Приклад - 0931245891")
+
+
 class Phone(Field):
     def __init__(self, value):
         if not self.is_valid(value):
-            raise ValueError(f"Не вірний номер телефона {value}.\n Номер може містити тільки 10 цифри!!! Приклад - 0931245891")
+            raise ValueError(f"Не вірний номер телефона {value}.\n "
+                             f"Номер може містити тільки 10 цифри!!! Приклад - 0931245891")
         super().__init__(value)
 
     def is_valid(self, value):
         return isinstance(value, str) and value.isdigit() and len(value) == 10
     
+
 class Email(Field):
 
     def __init__(self, value):
@@ -64,18 +67,24 @@ class Email(Field):
     def __json__(self):
         return str(self.value) if self.value else None
     
+
 class Address(Field):
 
-    def is_valid(self, value):
-        return isinstance(value, str) and value
+    # def is_valid(self, value):
+    #     # return isinstance(value, str) and value
+    #     return str(value) if value else None
+    # def __json__(self):
+    #     return str(self.value) if self.value else None
     
     def __json__(self):
         return str(self.value) if self.value else None
+
 
 class Birthday(Field):
     def __init__(self, value=None):
         if not self.is_valid(value):
             raise ValueError("Не вірний формат дати народження. Використовуйте YYYY-MM-DD.")
+
         super().__init__(value)
 
     @property
@@ -86,16 +95,23 @@ class Birthday(Field):
     def value(self, new_value):
         if not self.is_valid(new_value):
             raise ValueError("Не вірний формат дати народження. Використовуйте YYYY-MM-DD.")
-        datetime.strptime(new_value, "%Y-%m-%d")
+        if new_value:
+            datetime.strptime(new_value, "%Y-%m-%d")
         self.__value = new_value
 
     def is_valid(self, value):
+        if not value:
+            return True
         try:
             datetime.strptime(value, "%Y-%m-%d")
         except ValueError:
             return False
         else:
             return True
+
+    def __json__(self):
+        return str(self.value) if self.value else None
+
 
 class Record:
     def __init__(self, name, birthday=None, address=None):
@@ -170,7 +186,8 @@ class Record:
         # else:
         #     return (f"Contact name: {str(self.name.value)},"
         #             f" phones: {'; '.join(str(p.value) for p in self.phones)}")
-        return (f"{str(self.name.value)}, {str(self.address.value)}, {str(self.birthday.value)},"
+
+        return (f"{str(self.name.value)}, {str(self.address)}, {str(self.birthday)},"
                 f" {'; '.join(str(p.value) for p in self.phones)},"
                 f" {'; '.join(str(p.value) for p in self.emails)}")
 

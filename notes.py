@@ -29,7 +29,8 @@ def add_note():
 
 def search_notes(query):
     notes = load_notes()
-    found_notes = [note for note in notes if query in note['title'] or query in note['content'] or query in note['tags']]
+    found_notes = [note for note in notes if query in note['title']
+                   or query in note['content'] or query in note['tags']]
     
     if found_notes:
         print("Знайдені нотатки:")
@@ -88,6 +89,7 @@ def delete_note():
 
     print(f"Нотатка з заголовком '{title_to_delete}' не знайдена.")
 
+
 def display_note(title):
     notes = load_notes()
 
@@ -99,6 +101,7 @@ def display_note(title):
             return
 
     print(f"Нотатка з заголовком '{title}' не знайдена.")
+
 
 def main():
     while True:
@@ -131,6 +134,7 @@ def main():
             break
         else:
             print("Невірний вибір. Спробуйте ще раз.")
+
 
 if __name__ == "__main__":
     main()

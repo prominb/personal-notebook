@@ -1,128 +1,103 @@
 {
   "records": [
     {
+      "name": "gena",
+      "phones": [
+        "1231234567"
+      ],
+      "emails": [
+        "asd@gmail.com"
+      ],
+      "birthday": null,
+      "address": "kiev"
+    },
+    {
       "name": "a",
       "phones": [
-        "1231231234"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "s",
-      "phones": [
-        "0681111113"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "d",
-      "phones": [
-        "0981234566"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "z",
-      "phones": [
-        "0972277111"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "w",
-      "phones": [
-        "0956122222"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "e",
-      "phones": [
-        "0781227845"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "es",
-      "phones": [
-        "0745627845"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "qa",
-      "phones": [
-        "0634421111"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "sa",
-      "phones": [
-        "1111111111"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "as",
-      "phones": [
-        "1111233333"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "scv",
-      "phones": [
-        "1902000111"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "asd",
-      "phones": [
-        "0982345612"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "akj",
-      "phones": [
-        "1234567895"
-      ],
-      "emails": [],
-      "birthday": null
-    },
-    {
-      "name": "kjh",
-      "phones": [
-        "0230230230"
+        "1231234568"
       ],
       "emails": [
-        "example2@example.com"
+        "asd1@gmail.com"
       ],
-      "birthday": null
+      "birthday": null,
+      "address": "kiev"
     },
     {
-      "name": "akm",
+      "name": "b",
       "phones": [
-        "1234567896"
+        "1231234566"
       ],
       "emails": [
-        "example2@example.com"
+        "asd2@gmail.com"
       ],
-      "birthday": null
+      "birthday": null,
+      "address": "kiev"
+    },
+    {
+      "name": "da",
+      "phones": [
+        "2231234568"
+      ],
+      "emails": [
+        "asd5@gmail.com"
+      ],
+      "birthday": null,
+      "address": "kiev"
+    },
+    {
+      "name": "asg",
+      "phones": [
+        "1241234568"
+      ],
+      "emails": [
+        "asd61@gmail.com"
+      ],
+      "birthday": null,
+      "address": "kiev"
+    },
+    {
+      "name": "dfg",
+      "phones": [
+        "1431234568"
+      ],
+      "emails": [
+        "asd190@gmail.com"
+      ],
+      "birthday": null,
+      "address": "kiev"
+    },
+    {
+      "name": "ghj",
+      "phones": [
+        "1231634568"
+      ],
+      "emails": [
+        "asd231@gmail.com"
+      ],
+      "birthday": "1977-04-10",
+      "address": "kiev"
+    },
+    {
+      "name": "ghj1",
+      "phones": [
+        "3231634568"
+      ],
+      "emails": [
+        "asd2321@gmail.com"
+      ],
+      "birthday": "1977-04-10",
+      "address": null
+    },
+    {
+      "name": "ghj2",
+      "phones": [
+        "3231634468"
+      ],
+      "emails": [
+        "asd2321@gmail.com"
+      ],
+      "birthday": "1985-02-15",
+      "address": null
     }
   ]
 }
