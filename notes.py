@@ -197,7 +197,7 @@ def run_notes():
             tags_to_display = input("Введіть теги через пробіл для виведення нотаток в таблице: ").split()
             display_notes_by_tags_in_table(tags_to_display)
         elif choice == '9':
-            break
+            return
         else:
             print("Невірний вибір. Спробуйте ще раз.")
 

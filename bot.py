@@ -291,6 +291,8 @@ class CommandHandler:
     
     def handle_notes(self, args):
         run_notes()
+        return "To main menu:"
+
 
     def choice_action(self, data):
         actions = {
@@ -340,7 +342,7 @@ class CommandHandler:
 class Bot:
 
     def run(self):
-        print(f'\n{YLLOW}Вас вітає Бот для роботи з вашии контактами.')
+        print(f'\n{YLLOW}Вас вітає Бот для роботи з вашими контактами.')
         print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT + ["birthday"]}{DEFALUT}')
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
