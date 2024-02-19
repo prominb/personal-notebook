@@ -1,6 +1,6 @@
 from datetime import datetime
 from collections import UserDict
-
+import re
 
 class Field:
     def __init__(self, value):
@@ -34,14 +34,7 @@ class Field:
 class Name(Field):
     def is_valid(self, value):
         return isinstance(value, str) and value
-
-# class Phone(Field):
-#     def is_valid(self, value):
-#         if  (len(value) == 10 and value.isdigit()):
-#             return value
-#         else :
-#             raise ValueError(f"Не вірний номер телефона {value}.\n Номер може містити тільки 10 цифри!!! Приклад - 0931245891")
-
+    
 
 class Phone(Field):
     def __init__(self, value):
@@ -51,6 +44,8 @@ class Phone(Field):
         super().__init__(value)
 
     def is_valid(self, value):
+        if not value:
+            return True
         return isinstance(value, str) and value.isdigit() and len(value) == 10
     
 
@@ -62,7 +57,10 @@ class Email(Field):
         super().__init__(value)
 
     def is_valid(self, value):
-        return isinstance(value, str) and '@' in value
+        if not value:
+            return True
+        # return isinstance(value, str) and '@' in value
+        return re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$', value)
     
     def __json__(self):
         return str(self.value) if self.value else None
