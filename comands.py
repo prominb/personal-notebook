@@ -8,7 +8,7 @@ DOSTUPNI_COMANDY = f"{RED}Доступні наступні команди : {GR
 PATH_TO_DIR = fr"C:\Users\User\Desktop\Go_IT\Rizne"
 
 BAD_COMMAND_ADD = f"{YLLOW}Невірні параметри для команди {GREEN}'add'{YLLOW} !!!.\n\
-                        {RED}# Приклад {GREEN}add{BIRUZA} Імя_контакту{YLLOW} Номер_телефону|Еmail {DEFALUT}"
+                        {RED}# Приклад {GREEN}add{BIRUZA} Імя_контакту{YLLOW} [phone=1111111111] [email=1111@mai.com] [birthday=1999-01-01] [adress=Kiev] {DEFALUT}"
     
 BAD_COMMAND_CHANGE = f"{YLLOW}Невірні параметри для команди {GREEN}'change'{YLLOW} !!!.\n\
                            {RED}# Приклад {GREEN}change{BIRUZA} Імя_контакту {GREEN}name {BIRUZA} Нове ім'я "
@@ -25,7 +25,7 @@ BAD_COMMAND_SORTED = f"{YLLOW}Невірні параметри для кома�
 BAD_COMMAND_NOTES = f"{YLLOW}Невірні параметри для команди {GREEN}'notes'{YLLOW} !!!.\n\
                         {RED}# Приклад {GREEN}notes"
 BAD_COMMAND_EMAIL = f"{YLLOW}Невірні параметри для команди {GREEN}'email'{YLLOW} !!!.\n\
-                        {RED}# Приклад {GREEN}'email'{BIRUZA}"
+                        {RED}# Приклад {GREEN}'email'{BIRUZA}Імя_контакту{YLLOW} "
 
 BAD_COMMAND_BIRTHDAYS = f"{YLLOW}Невірні параметри для команди {GREEN}'birthday'{YLLOW} !!!.\n\
                 {RED}# Приклад:  {GREEN}birthday{YLLOW} 50  {RED}<<{GREEN} birthday {YLLOW}'кількість днів'{RED} >>"
