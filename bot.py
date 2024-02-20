@@ -133,11 +133,10 @@ class ContactAssistant:
             if record:
                 record.add_email(email)
                 self.save_data()
-                print(f"DEBUG: Email успешно добавлен для контакта {record.name.value} - {email}")
-                return f"{YLLOW}Email успешно додано для контакта {BIRUZA}{record.name.value}{DEFALUT}"
+                print(f"DEBUG: Email успішно добавлений для контакта {record.name.value} - {email}")
+                return f"{YLLOW}Email успішно добавлений для контакта {BIRUZA}{record.name.value}{DEFALUT}"
             else:
-                raise IndexError(f"{YLLOW}Такого імені не знайдено у вашій телефоній книзі !!!"
-                                 f"{DEFALUT}{PISKAZKA_SHOW_ALL}")
+                raise IndexError(NOT_FOUND_NAME)
         except (ValueError, IndexError) as e:
             raise InputError(str(e))
         
@@ -155,8 +154,7 @@ class ContactAssistant:
                 return (f"{YLLOW}За вказаним іменем {BIRUZA}{name}{YLLOW} знайдено номер"
                         f"{BIRUZA} {record.phones[0]}{DEFALUT}")
             else:
-                raise IndexError(f"{YLLOW}Такого іменні не знайдено у вашій телефоній книзі !!!"
-                                 f"{DEFALUT}{PISKAZKA_SHOW_ALL} ")
+                raise IndexError(NOT_FOUND_NAME)
         except (ValueError, IndexError) as e:
             raise InputError(str(e))
 
@@ -180,7 +178,7 @@ class CommandHandler:
     def __init__(self, contact_assistant):
         self.contact_assistant = contact_assistant
 
-    def handle_hello(self, **args):
+    def handle_hello(self, args):
         return f"{YLLOW}How can I help you?{DEFALUT}"
 
     def handle_add(self, args):
@@ -242,7 +240,7 @@ class CommandHandler:
 
     def handle_email(self, args):
         if len(args.split()) < 2:
-            raise InputError("BAD_COMMAND_EMAIL")
+            raise InputError(BAD_COMMAND_EMAIL)
 
         name_or_email, *emails = args.split(" ", 1)[1].strip().split(",")
         
@@ -251,10 +249,11 @@ class CommandHandler:
         return self.contact_assistant.get_email(name_or_email)
 
     def handle_phone(self, args):
-        if len(args) == 0:
-            raise InputError(BAD_COMMAND_PHONE)
         args_list = args.split(" ")
-        name = args_list[1]
+        if len(args_list) <= 2:
+            raise InputError(BAD_COMMAND_PHONE)
+        
+        name = args_list[2]
         return self.contact_assistant.get_phone(name)
 
     def handle_show(self, args):
@@ -266,9 +265,10 @@ class CommandHandler:
 
     def handle_birthdays(self, args):
         try:
-            if args.strip().lower() == 'birthday':
-                return f"{YLLOW}Невірні параметри для команди {BIRUZA}birthday{YLLOW}!!!.\n" \
-                       f"{DEFALUT}# Приклад {BIRUZA}birthday{DEFALUT} кількість днів."
+            # if args.strip().lower() == 'birthday':
+            #     return BAD_COMMAND_BIRTHDAYS 
+            #           #Було   f"{YLLOW}Невірні параметри для команди {BIRUZA}birthday{YLLOW}!!!.\n" \
+            #               #   f"{DEFALUT}# Приклад {BIRUZA}birthday{DEFALUT} кількість днів."
 
             if len(args.split()) < 2:
                 raise InputError(BAD_COMMAND_BIRTHDAYS)
@@ -278,11 +278,12 @@ class CommandHandler:
 
             result = self.contact_assistant.birthdays_in_days(days)
             if not result:
-                return f"{YLLOW}Немає жодних днів народження наступні {days} днів.{DEFALUT}"
+                return f"{YLLOW}Немає жодних днів народження наступні - {RED}{days}{YLLOW} днів.{DEFALUT}"
             else:
-                output = f"{YLLOW}Найближчі дні народження протягом наступних {days} днів:{DEFALUT}\n"
+                output = f"{YLLOW}Найближчі дні народження протягом наступних{RED} - {days}{YLLOW} днів:{DEFALUT}\n"
                 for name, days_until_birthday in result:
-                    output += f"{BIRUZA}{name}{DEFALUT} - {RED}{days_until_birthday}{DEFALUT} днів\n"
+                    output += f"{BIRUZA}{name:<10}{DEFALUT} - {RED}{days_until_birthday:^12}{YLLOW} днів\n"
+                    
                 return output.strip()
 
         except (IndexError, ValueError):
@@ -317,7 +318,7 @@ class CommandHandler:
     
     def handle_notes(self, args):
         run_notes()
-        return "To main menu:"
+        return f"{YLLOW}Роботу з нотатками завершено!!!\n{PURPURE}Готовий до наступних команд!!!{DEFALUT}"
 
 
     def choice_action(self, data):
@@ -325,19 +326,16 @@ class CommandHandler:
             'hello': self.handle_hello,
             'add': self.handle_add,
             "change": self.handle_change,
-            "phone": self.handle_phone,
+            "get phone": self.handle_phone,
             'search': self.handle_search,
             'email': self.handle_email,
-            "show": self.handle_show,
+            "show all": self.handle_show,
             "birthday": self.handle_birthdays,  # Додано обробку команди "birthday"
-            "close": self.handle_bye,
             "exit": self.handle_bye,
-            "good bye": self.handle_bye,
             'sorted': self.handle_sorted,
             'notes': self.handle_notes,
         }
-        return actions.get(data, lambda args: f'{YLLOW}Така команда не підтримується наразі\n'
-                                              f'{DEFALUT}{DOSTUPNI_COMANDY}')
+        return actions.get(data, lambda args: NOT_FOUND_COMMAND)
 
     def process_input(self, user_input):
         try:
@@ -347,12 +345,16 @@ class CommandHandler:
             space_index = user_input.find(' ')
 
             if space_index != -1:
-                first_word = user_input[:space_index].lower()
+                list_word = user_input.lower().strip().split()
+                first_word= user_input[:space_index]
+                
+                if list_word[0] == "show" and list_word[1] == "all":
+                    first_word = "show all"
+                elif list_word[0] == "get" and list_word[1] == "phone":
+                    first_word = "get phone"
+                
             else:
-                first_word = user_input.lower()
-
-            if first_word in ["good", "bye"]:
-                first_word = "good bye"
+                first_word = user_input
 
             func = self.choice_action(first_word)
             result = func(user_input)
@@ -368,7 +370,8 @@ class CommandHandler:
 class Bot:
 
     def run(self):
-        print(f'\n{YLLOW}Вас вітає Бот для роботи з вашими контактами.')
+
+        print(f'\n{YLLOW}Вас вітає Бот для роботи з Вашими контактами.')
         print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}')
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
