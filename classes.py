@@ -1,6 +1,6 @@
 import re
-from comands import*
-from colors import*
+from comands import *
+from colors import *
 from datetime import datetime
 from collections import UserDict
 
@@ -41,7 +41,8 @@ class Name(Field):
 class Phone(Field):
     def __init__(self, value):
         if not self.is_valid(value):
-            raise ValueError(BAD_FORMAT_PHONE)
+
+            raise ValueError(f"{BAD_FORMAT_PHONE}")
                     #Було    f"Не вірний номер телефона {value}.\n "
                     #         f"Номер може містити тільки 10 цифри!!! Приклад - 0931245891"
         super().__init__(value)
