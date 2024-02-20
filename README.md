@@ -20,6 +20,16 @@
 ├── colors.py  
 └── classes.py
 
+packaging_tutorial/
+├── LICENSE
+├── pyproject.toml
+├── README.md
+├── src/
+│ └── example_package_YOUR_USERNAME_HERE/
+│ ├── **init**.py
+│ └── example.py
+└── tests/
+
 <a name='опис'></a>
 
 ## Опис
