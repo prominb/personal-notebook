@@ -317,8 +317,12 @@ class CommandHandler:
     
     def handle_notes(self, args):
         run_notes()
-        return "To main menu:"
-
+        return "To main menu:"  
+     
+    def handle_help(self, args):
+        return HELP
+                
+               
 
     def choice_action(self, data):
         actions = {
@@ -335,6 +339,7 @@ class CommandHandler:
             "good bye": self.handle_bye,
             'sorted': self.handle_sorted,
             'notes': self.handle_notes,
+            'help': self.handle_help,
         }
         return actions.get(data, lambda args: f'{YLLOW}Така команда не підтримується наразі\n'
                                               f'{DEFALUT}{DOSTUPNI_COMANDY}')
