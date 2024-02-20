@@ -1,7 +1,7 @@
 
 from pathlib import Path
 import os, shutil, sys, re
-from colors import*
+from virtual_assistant_v007.colors import*
 
 
 TRANS = {

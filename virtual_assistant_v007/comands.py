@@ -1,10 +1,12 @@
-from colors import * 
+from virtual_assistant_v007.colors import * 
+
+
 PISKAZKA_SHOW_ALL = f"\nКоманда - {GREEN}show all{YLLOW} - покаже доступні контакти{DEFALUT}"
 
 LIST_COMANDS_BOT = ["hello", "help", "add", "show all", "change", 'search', "get phone", "email", 'birthday', 'sorted', 'notes', "exit"]
-# LIST_COMANDS_BOT = ["hello", "add", "change", "phone", "email", "show all", 'search', "good bye", "close", "exit",
-#                     'sorted', 'notes']
+
 DOSTUPNI_COMANDY = f"{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}{DEFALUT}"
+
 PATH_TO_DIR = fr"C:\Users\User\Desktop\Go_IT\Rizne"
 
 BAD_COMMAND_ADD = f"{YLLOW}Невірні параметри для команди {GREEN}'add'{YLLOW} !!!.\n\
@@ -44,7 +46,6 @@ BAD_FORMAT_BIRTHDAY = f"{YLLOW}Не вірний формат дати наро�
 NOT_FOUND_NAME = f"{YLLOW}Такого імені не знайдено у вашій телефоній книзі !!!\n {PISKAZKA_SHOW_ALL}"
 
 NOT_FOUND_COMMAND = f'{YLLOW}Tака команда не пітримується наразі\n{DEFALUT}{DOSTUPNI_COMANDY}'
-
 
 
 BAD_COMMAND_EMAIL = f"{YLLOW}Невірні параметри для команди {GREEN}email{YLLOW} !!!.\n\

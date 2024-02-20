@@ -1,15 +1,13 @@
-from classes import Record, AddressBook
-from datetime import datetime, timedelta
-from colors import *
-from comands import *
+from virtual_assistant_v007.classes import Record, AddressBook
+from datetime import datetime
+from virtual_assistant_v007.colors import *
+from virtual_assistant_v007.comands import *
 import json
 import os
-import time
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
-# from prompt_toolkit.input import win32 as win32_input
-from sorted import *
-from notes import run_notes
+from virtual_assistant_v007.sorted import *
+from virtual_assistant_v007.notes import run_notes
 
 
 class InputError(Exception):

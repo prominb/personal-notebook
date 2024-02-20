@@ -1,6 +1,6 @@
 import re
-from comands import *
-from colors import *
+from virtual_assistant_v007.comands import *
+from virtual_assistant_v007.colors import *
 from datetime import datetime
 from collections import UserDict
 

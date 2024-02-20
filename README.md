@@ -13,13 +13,6 @@
 
 ### Структура проекту
 
-<!--
-├── bot.py
-├── main.py
-├── notes.py
-├── sorted.py
-├── colors.py
-└── classes.py -->
 <pre>
 personal-notebook/
 ├── LICENSE
@@ -93,7 +86,7 @@ personal-notebook/
 ### Запуск бота
 
 Використовуйте команду:
-`python main.py`
+`run-assistant`
 
 Після запуску ви побачите команди:
 

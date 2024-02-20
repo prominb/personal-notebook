@@ -1,6 +1,6 @@
 import json
 from textwrap import wrap
-from colors import *
+from virtual_assistant_v007.colors import *
 from datetime import datetime
 
 
@@ -144,7 +144,7 @@ def display_notes_in_table(notes):
     print("\nНотатки:")
     print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
     print(
-        f"| {'Заголовок': <{column_widths['title']}} | " \
+        f"| {'Заголовок': <{column_widths['title'] + 5}} | " \
         f"{'Текст': <{column_widths['content']}} | " \
         f"{'Теги': <{column_widths['tags']}} | " \
         f"{'Змінено': <{column_widths['modified']}} |"
@@ -153,7 +153,7 @@ def display_notes_in_table(notes):
     
     for note in notes:
         print(
-            f"| {note['title']: <{column_widths['title']}} | " \
+            f"| {note['title']: <{column_widths['title'] + 5}} | " \
             f"{note['content']: <{column_widths['content']}} | " \
             f"{', '.join(note['tags']): <{column_widths['tags']}} | " \
             f"{note['modified']: <{column_widths['modified']}} |"
