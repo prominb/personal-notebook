@@ -80,7 +80,25 @@ personal-notebook/
 2. Відкрийте термінал або командний рядок у каталозі проекту.
 3. Використовуйте команду `pip install -r requirements.txt`, щоб встановити залежності.
 
-<!-- gddggd -->
+## Встановлення пакету (для Windows)
+
+1. Створити віртуальне середовище: py -m venv .venv
+2. Активувати віртуальне середовище: .\.venv\Scripts\Activate.ps1
+3. Перевірка встановлених пакетів: pip list
+4. Встановлення пакету: pip install -e .
+5. Запуск бота-асистента: run-assistant
+
+<!-- Видалення пакету: pip uninstall personal-assistant2
+Деактивація віртуального середовищя: deactivate
+А можна їх в 2 колонки вставити щоб зліва Віндовс, зправа Лінуск??
+python3 -m venv .venv - створив середовище з назвою ".venv"
+source .venv/bin/activate - активував
+pip3 list - перевірив встановлені пакети
+pip install -e . - зібрав свій пакет
+run-assistant - запустив
+pip3 uninstall personal-assistant2 - видалив
+pip3 list  - перевірив встановлені пакети
+deactivate - деактивував вірт. середовище -->
 
 <a name='використання'></a>
 
