@@ -1,13 +1,11 @@
 from datetime import datetime
 from collections import UserDict
+import re
 
 
 class Field:
     def __init__(self, value):
         if not self.is_valid(value):
-            # if f"{self.__class__.__name__.lower()}" == "phone":
-            #
-            #     raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
             raise ValueError
         self.value = value
 
@@ -27,6 +25,7 @@ class Field:
     def is_valid(self, value):
         # return isinstance(value, (int, float, str))
         return True
+
     def __json__(self):
         return self.value
 
@@ -34,14 +33,7 @@ class Field:
 class Name(Field):
     def is_valid(self, value):
         return isinstance(value, str) and value
-
-# class Phone(Field):
-#     def is_valid(self, value):
-#         if  (len(value) == 10 and value.isdigit()):
-#             return value
-#         else :
-#             raise ValueError(f"Не вірний номер телефона {value}.\n Номер може містити тільки 10 цифри!!! Приклад - 0931245891")
-
+    
 
 class Phone(Field):
     def __init__(self, value):
@@ -51,6 +43,8 @@ class Phone(Field):
         super().__init__(value)
 
     def is_valid(self, value):
+        if not value:
+            return True
         return isinstance(value, str) and value.isdigit() and len(value) == 10
     
 
@@ -62,7 +56,10 @@ class Email(Field):
         super().__init__(value)
 
     def is_valid(self, value):
-        return isinstance(value, str) and '@' in value
+        if not value:
+            return True
+        # return isinstance(value, str) and '@' in value
+        return re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$', value)
     
     def __json__(self):
         return str(self.value) if self.value else None
@@ -179,13 +176,6 @@ class Record:
         return record_data
 
     def __str__(self):
-        # if self.birthday:
-        #     return (f"{str(self.name.value)}, {str(self.birthday.value)},"
-        #             f" {'; '.join(str(p.value) for p in self.phones)},"
-        #             f" {'; '.join(str(p.value) for p in self.emails)}")
-        # else:
-        #     return (f"Contact name: {str(self.name.value)},"
-        #             f" phones: {'; '.join(str(p.value) for p in self.phones)}")
 
         return (f"{str(self.name.value)}, {str(self.address)}, {str(self.birthday)},"
                 f" {'; '.join(str(p.value) for p in self.phones)},"
@@ -203,7 +193,7 @@ class AddressBook(UserDict):
                 if query in str(phone.value):
                     matching_records.append(record)
             for email in record.emails:
-                if query in str(email.value):
+                if query.lower() in str(email.value).lower():
                     matching_records.append(record)
             if query.lower() in record.address.value.lower():
                 matching_records.append(record)
@@ -230,3 +220,13 @@ class AddressBook(UserDict):
 
     def find(self, name):
         return self.data.get(name)
+
+    def rename_contact(self, old_name: str, new_name: str):
+        record = self.find(old_name)
+        if record:
+            record.name.value = new_name
+            self.data[new_name] = record
+            self.delete(old_name)
+        else:
+            raise ValueError(f"Contact name {old_name} not exist in {self.data}.")
+        return 'Ok'
