@@ -1,0 +1,3 @@
+include README.md
+include personal_assistant2/*.txt
+include personal_assistant2/*.json
