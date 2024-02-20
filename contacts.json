@@ -14,13 +14,13 @@
     {
       "name": "a",
       "phones": [
-        "1231234568"
+        null
       ],
       "emails": [
-        "asd1@gmail.com"
+        null
       ],
-      "birthday": null,
-      "address": "kiev"
+      "birthday": "1980-02-15",
+      "address": null
     },
     {
       "name": "b",
@@ -30,7 +30,7 @@
       "emails": [
         "asd2@gmail.com"
       ],
-      "birthday": null,
+      "birthday": "1931-01-01",
       "address": "kiev"
     },
     {
@@ -131,7 +131,6 @@
       ],
       "birthday": "1985-05-25",
       "address": "Kharkiv"
-    
     },
     {
       "name": "pol",
@@ -142,6 +141,17 @@
         "pol@fg.com"
       ],
       "birthday": "1980-03-02",
+      "address": null
+    },
+    {
+      "name": "name=aaa",
+      "phones": [
+        "0000000000"
+      ],
+      "emails": [
+        "55555@gmail.com"
+      ],
+      "birthday": null,
       "address": null
     }
   ]
