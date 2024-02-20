@@ -247,9 +247,7 @@ class CommandHandler:
         name_or_email, *emails = args.split(" ", 1)[1].strip().split(",")
         
         if '@' in name_or_email:
-            # Вместо вызова self.contact_assistant.get_email_by_email(name_or_email.strip())
-            # вызываем self.contact_assistant.get_email(name_or_email.strip()), так как
-            # метод get_email ожидает имя, а не email
+            
             return self.contact_assistant.get_email(name_or_email.strip())
         return self.contact_assistant.get_email(name_or_email)
 
