@@ -21,14 +21,26 @@
 ├── colors.py
 └── classes.py -->
 <pre>
-packaging_tutorial/
+personal-notebook/
 ├── LICENSE
-├── pyproject.toml
+├── MANIFEST.in
 ├── README.md
-├── src/
-│   └── example_package_YOUR_USERNAME_HERE/
-│       ├── __init__.py
-│       └── example.py
+├── requirements.txt
+├── setup.py
+├── contacts.json
+├── notes.json
+├── .gitignore
+├── personal_assistant2/
+│   ├── __init__.py
+│   ├── main.py
+│   ├── bot.py
+│   ├── classes.py
+│   ├── colors.py
+│   ├── comands.py
+│   ├── notes.py
+│   ├── sorted.py
+│   ├── contacts.json
+│   └── notes.json
 └── tests/
 </pre>
 
