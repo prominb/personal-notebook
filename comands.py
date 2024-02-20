@@ -1,8 +1,8 @@
 from colors import * 
 PISKAZKA_SHOW_ALL = f"\nКоманда - {GREEN}show all{YLLOW} - покаже доступні контакти{DEFALUT}"
 
-LIST_COMANDS_BOT = ["hello", "add", "phone", "email", "show all", "change", 'search', 
-                    "good bye", "close", "exit", 'sorted', 'notes']
+LIST_COMANDS_BOT = ["hello", "add", "phone", "email", "show all", "change", 'search',
+                    "good bye", "close", "exit", 'sorted', 'notes', 'birthday']
 # LIST_COMANDS_BOT = ["hello", "add", "change", "phone", "email", "show all", 'search', "good bye", "close", "exit",
 #                     'sorted', 'notes']
 DOSTUPNI_COMANDY = f"{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}{DEFALUT}"

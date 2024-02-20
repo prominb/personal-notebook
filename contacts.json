@@ -131,6 +131,18 @@
       ],
       "birthday": "1985-05-25",
       "address": "Kharkiv"
+    
+    },
+    {
+      "name": "pol",
+      "phones": [
+        "0504564556"
+      ],
+      "emails": [
+        "pol@fg.com"
+      ],
+      "birthday": "1980-03-02",
+      "address": null
     }
   ]
 }
