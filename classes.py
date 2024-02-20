@@ -187,15 +187,15 @@ class AddressBook(UserDict):
         matching_records = []
 
         for record in self.data.values():
-            if query.lower() in record.name.value.lower():
+            if query.lower() in str(record.name).lower():
                 matching_records.append(record)
             for phone in record.phones:
                 if query in str(phone.value):
                     matching_records.append(record)
             for email in record.emails:
-                if query.lower() in str(email.value).lower():
+                if query.lower() in str(email).lower():
                     matching_records.append(record)
-            if query.lower() in record.address.value.lower():
+            if query.lower() in str(record.address).lower():
                 matching_records.append(record)
 
         return matching_records

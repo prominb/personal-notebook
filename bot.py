@@ -7,7 +7,7 @@ import os
 import time
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
-from prompt_toolkit.input import win32 as win32_input
+# from prompt_toolkit.input import win32 as win32_input
 from sorted import *
 from notes import run_notes
 
@@ -290,19 +290,23 @@ class CommandHandler:
             raise InputError(BAD_COMMAND_BIRTHDAYS)
 
     def handle_search(self, args):
-        if len(args)  ==0:
+        if len(args) == 0:
             raise InputError(BAD_COMMAND_SEARCH)
 
         query = args.split(" ", 1)[1]
+
         matching_records = self.contact_assistant.address_book.search(query)
 
         if not matching_records:
             return f"{YLLOW}Нажаль нічого не знайдено  {DEFALUT}"
         else:
             result = f"{YLLOW}За Вашим запитом = {RED}{query}{YLLOW} було знайдено наступні записи :{DEFALUT}\n"
+            result += f'{GREEN}{"Name":<10} {"Birthday":^12} {"Phone":<12} {"Email":<20} {"Address":<20} {YLLOW}\n'
             for record in matching_records:
                 phone_numbers = ', '.join(str(phone) for phone in record.phones)
-                result += f"{record.name}: {phone_numbers}\n"
+                emails = ', '.join(map(str, [email.value for email in record.emails if email.value]))
+                result += (f"{record.name.value:<10} {str(record.birthday):^12} {phone_numbers:<12}"
+                           f" {emails:<20} {str(record.address):<20}\n")
             return result.strip()    
     
     def handle_sorted(self, args):
@@ -385,7 +389,6 @@ class Bot:
 
                 # user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
                 user_input = prompt("Введіть команду>> ", completer=completer).strip()
-
                 result = command_handler.process_input(user_input)
 
                 if result is None:
