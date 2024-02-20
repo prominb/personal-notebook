@@ -220,3 +220,13 @@ class AddressBook(UserDict):
 
     def find(self, name):
         return self.data.get(name)
+
+    def rename_contact(self, old_name: str, new_name: str):
+        record = self.find(old_name)
+        if record:
+            record.name.value = new_name
+            self.data[new_name] = record
+            self.delete(old_name)
+        else:
+            raise ValueError(f"Contact name {old_name} not exist in {self.data}.")
+        return 'Ok'

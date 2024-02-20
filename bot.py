@@ -60,13 +60,13 @@ class ContactAssistant:
         try:
             record = Record(name)
             for arg, val in args.items():
-                if arg == 'phone':
+                if arg.lower() == 'phone':
                     record.add_phone(val)
-                elif arg == 'email':
+                elif arg.lower() == 'email':
                     record.add_email(val)
-                elif arg == 'birthday':
+                elif arg.lower() == 'birthday':
                     record.set_birthday(val)
-                elif arg == 'address':
+                elif arg.lower() == 'address':
                     record.set_address(val)
             self.address_book.add_record(record)
             self.save_data()
@@ -74,7 +74,7 @@ class ContactAssistant:
         except ValueError as e:
             raise InputError(str(e))
 
-    def change_contact(self, name, phone=None, email=None, address=None, birthday=None):
+    def change_contact(self, name, newname=None, phone=None, email=None, address=None, birthday=None):
         try:
             record = self.address_book.find(name)
             if record:
@@ -88,6 +88,8 @@ class ContactAssistant:
                     record.set_address(address)
                 if birthday:
                     record.set_birthday(birthday)
+                if newname:
+                    self.address_book.rename_contact(name, newname)
                 self.save_data()
                 return f"{YLLOW}Дані успішно змінені!!!{PISKAZKA_SHOW_ALL}"
             else:
@@ -179,13 +181,13 @@ class CommandHandler:
 
         for contact_value in contact_values:
             parameter, val = contact_value.split('=')
-            if parameter.strip() == 'email':
+            if parameter.strip().lower() == 'email':
                 email = val.strip()
-            elif parameter.strip() == 'phone':
+            elif parameter.strip().lower() == 'phone':
                 phone = val.strip()
-            elif parameter.strip() == 'address':
+            elif parameter.strip().lower() == 'address':
                 address = val.strip()
-            elif parameter.strip() == 'birthday':
+            elif parameter.strip().lower() == 'birthday':
                 birthday = val.strip()
             else:
                 raise InputError(BAD_COMMAND_ADD)
@@ -206,16 +208,19 @@ class CommandHandler:
 
         _, name, contact_value = args.split(" ")
         parameter, val = contact_value.split('=')
-        if parameter.strip() == 'email':
+        if parameter.strip().lower() == 'email':
             return self.contact_assistant.change_contact(name, email=val.strip())
-        elif parameter.strip() == 'phone':
+        elif parameter.strip().lower() == 'phone':
             return self.contact_assistant.change_contact(name, phone=val.strip())
-        elif parameter.strip() == 'address':
+        elif parameter.strip().lower() == 'address':
             return self.contact_assistant.change_contact(name, address=val.strip())
-        elif parameter.strip() == 'birthday':
+        elif parameter.strip().lower() == 'birthday':
             return self.contact_assistant.change_contact(name, birthday=val.strip())
+        elif parameter.strip().lower() == 'name':
+            return self.contact_assistant.change_contact(name, newname=val.strip())
+
         else:
-            raise InputError(BAD_COMMAND_CHANGE)
+                raise InputError(BAD_COMMAND_CHANGE)
 
     def handle_email(self, args):
         if len(args.split()) < 2:

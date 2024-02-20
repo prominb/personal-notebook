@@ -100,7 +100,29 @@
       "address": null
     },
     {
-      "name": "romaro",
+      "name": "Rom",
+      "phones": [
+        "0505852071"
+      ],
+      "emails": [
+        "df@mail.com"
+      ],
+      "birthday": "1971-08-22",
+      "address": "Kyiv"
+    },
+    {
+      "name": "Rom1",
+      "phones": [
+        "0505852071"
+      ],
+      "emails": [
+        "df@mail.com"
+      ],
+      "birthday": "1971-08-22",
+      "address": "Kyiv"
+    },
+    {
+      "name": "Romaro",
       "phones": [
         "0508885522"
       ],
