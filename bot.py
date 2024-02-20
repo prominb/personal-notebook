@@ -115,7 +115,7 @@ class ContactAssistant:
         except (ValueError, IndexError) as e:
             raise InputError(str(e))
 
-    def get_email(self, name, emails):
+    def get_email(self, name):
         try:
             record = self.address_book.find(name)
             if record and record.emails:
@@ -242,12 +242,15 @@ class CommandHandler:
 
     def handle_email(self, args):
         if len(args.split()) < 2:
-            raise InputError("BAD_COMMAND_EMAIL")
+            raise InputError(BAD_COMMAND_EMAIL)
 
         name_or_email, *emails = args.split(" ", 1)[1].strip().split(",")
         
         if '@' in name_or_email:
-            return self.contact_assistant.get_email_by_email(name_or_email.strip())
+            # Вместо вызова self.contact_assistant.get_email_by_email(name_or_email.strip())
+            # вызываем self.contact_assistant.get_email(name_or_email.strip()), так как
+            # метод get_email ожидает имя, а не email
+            return self.contact_assistant.get_email(name_or_email.strip())
         return self.contact_assistant.get_email(name_or_email)
 
     def handle_phone(self, args):

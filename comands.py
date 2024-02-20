@@ -28,3 +28,6 @@ BAD_COMMAND_NOTES = f"{YLLOW}Невірні параметри для коман
 
 BAD_COMMAND_BIRTHDAYS = f"{YLLOW}Невірні параметри для команди {GREEN}phone{YLLOW} !!!.\n\
                            {RED}# Приклад {GREEN}phone{BIRUZA} Імя_контакту{YLLOW} "
+
+BAD_COMMAND_EMAIL = f"{YLLOW}Невірні параметри для команди {GREEN}email{YLLOW} !!!.\n\
+                           {RED}# Приклад {GREEN}email{BIRUZA} Імя_контакту{YLLOW} "
