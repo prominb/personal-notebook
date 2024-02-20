@@ -291,8 +291,8 @@ class CommandHandler:
             raise InputError(BAD_COMMAND_BIRTHDAYS)
 
     def handle_search(self, args):
-        if len(args) == 0:
-            raise InputError(BAD_COMMAND_SEARCH)
+        if len(args.split()) < 2:
+                raise InputError(BAD_COMMAND_SEARCH)
 
         query = args.split(" ", 1)[1]
 

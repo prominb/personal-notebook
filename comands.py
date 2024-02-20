@@ -17,7 +17,7 @@ BAD_COMMAND_PHONE = f"{YLLOW}Невірні параметри для коман
                            {RED}# Приклад {GREEN}get phone{BIRUZA} Andrew  {RED}<<{GREEN} get phone {YLLOW}'Імя контакту'{RED} >> "
     
 BAD_COMMAND_SEARCH = f"{YLLOW}Невірні параметри для команди {GREEN}'search'{YLLOW} !!!.\n\
-                           {RED}# Приклад {GREEN}search{BIRUZA} Імя_контакту{YLLOW} "
+                           {RED}# Приклад {GREEN}search{BIRUZA} пошуковий текст{YLLOW} "
 
 BAD_COMMAND_SORTED = f"{YLLOW}Невірні параметри для команди {GREEN}'sorted'{YLLOW} !!!.\n\
                         {RED}# Приклад {GREEN}sorted{BIRUZA} {PATH_TO_DIR}  {RED}<<{GREEN} sorted {BIRUZA}'Шлях до папки'{RED} >>"
