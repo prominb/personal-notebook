@@ -2,12 +2,10 @@ from datetime import datetime
 from collections import UserDict
 import re
 
+
 class Field:
     def __init__(self, value):
         if not self.is_valid(value):
-            # if f"{self.__class__.__name__.lower()}" == "phone":
-            #
-            #     raise ValueError(f"Номер може містити тільки 10 цифри !!!\n# Приклад - 0931245891")
             raise ValueError
         self.value = value
 
@@ -27,6 +25,7 @@ class Field:
     def is_valid(self, value):
         # return isinstance(value, (int, float, str))
         return True
+
     def __json__(self):
         return self.value
 
@@ -177,13 +176,6 @@ class Record:
         return record_data
 
     def __str__(self):
-        # if self.birthday:
-        #     return (f"{str(self.name.value)}, {str(self.birthday.value)},"
-        #             f" {'; '.join(str(p.value) for p in self.phones)},"
-        #             f" {'; '.join(str(p.value) for p in self.emails)}")
-        # else:
-        #     return (f"Contact name: {str(self.name.value)},"
-        #             f" phones: {'; '.join(str(p.value) for p in self.phones)}")
 
         return (f"{str(self.name.value)}, {str(self.address)}, {str(self.birthday)},"
                 f" {'; '.join(str(p.value) for p in self.phones)},"
@@ -201,7 +193,7 @@ class AddressBook(UserDict):
                 if query in str(phone.value):
                     matching_records.append(record)
             for email in record.emails:
-                if query in str(email.value):
+                if query.lower() in str(email.value).lower():
                     matching_records.append(record)
             if query.lower() in record.address.value.lower():
                 matching_records.append(record)

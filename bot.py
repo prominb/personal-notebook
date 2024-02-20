@@ -205,7 +205,6 @@ class CommandHandler:
             raise InputError(BAD_COMMAND_CHANGE)
 
         _, name, contact_value = args.split(" ")
-        print(contact_value)
         parameter, val = contact_value.split('=')
         if parameter.strip() == 'email':
             return self.contact_assistant.change_contact(name, email=val.strip())
@@ -321,9 +320,9 @@ class CommandHandler:
             space_index = user_input.find(' ')
 
             if space_index != -1:
-                first_word = user_input[:space_index]
+                first_word = user_input[:space_index].lower()
             else:
-                first_word = user_input
+                first_word = user_input.lower()
 
             if first_word in ["good", "bye"]:
                 first_word = "good bye"
@@ -356,8 +355,9 @@ class Bot:
         while True:
             try:
 
-                user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
-                
+                # user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
+                user_input = prompt("Введіть команду>> ", completer=completer).strip()
+
                 result = command_handler.process_input(user_input)
 
                 if result is None:
