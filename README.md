@@ -13,22 +13,24 @@
 
 ### Структура проекту
 
-├── bot.py  
-├── main.py  
-├── notes.py  
-├── sorted.py  
-├── colors.py  
-└── classes.py
-
+<!--
+├── bot.py
+├── main.py
+├── notes.py
+├── sorted.py
+├── colors.py
+└── classes.py -->
+<pre>
 packaging_tutorial/
 ├── LICENSE
 ├── pyproject.toml
 ├── README.md
 ├── src/
-│ └── example_package_YOUR_USERNAME_HERE/
-│ ├── **init**.py
-│ └── example.py
+│   └── example_package_YOUR_USERNAME_HERE/
+│       ├── __init__.py
+│       └── example.py
 └── tests/
+</pre>
 
 <a name='опис'></a>
 
@@ -65,6 +67,8 @@ packaging_tutorial/
 1. Завантажте код проекту на свій комп'ютер.
 2. Відкрийте термінал або командний рядок у каталозі проекту.
 3. Використовуйте команду `pip install -r requirements.txt`, щоб встановити залежності.
+
+<!-- gddggd -->
 
 <a name='використання'></a>
 
