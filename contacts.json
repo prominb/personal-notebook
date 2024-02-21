@@ -1,89 +1,56 @@
 {
   "records": [
     {
-      "name": "gena",
-      "phones": [
-        "1231234567"
-      ],
-      "emails": [
-        "asd@gmail.com"
-      ],
-      "birthday": null,
-      "address": "kiev"
-    },
-    {
-      "name": "a",
-      "phones": [
-        null
-      ],
-      "emails": [
-        null
-      ],
-      "birthday": "1980-02-15",
-      "address": null
-    },
-    {
-      "name": "b",
-      "phones": [
-        "1231234566"
-      ],
-      "emails": [
-        "asd2@gmail.com"
-      ],
-      "birthday": "1931-01-01",
-      "address": "kiev"
-    },
-    {
-      "name": "asg",
+      "name": "Alisa",
       "phones": [
         "1241234568"
       ],
       "emails": [
-        "asd61@gmail.com"
+        "alis61@gmail.com"
       ],
       "birthday": null,
-      "address": "kiev"
+      "address": "Paris"
     },
     {
-      "name": "dfg",
+      "name": "Dmytro",
       "phones": [
-        "1431234568"
+        "0676542285"
       ],
       "emails": [
-        "asd190@gmail.com"
+        "dmytr0@meta.com.ua"
       ],
       "birthday": null,
-      "address": "kiev"
+      "address": "Odesa"
     },
     {
-      "name": "ghj",
+      "name": "Roman",
       "phones": [
-        "1231634568"
+        "0508543791"
       ],
       "emails": [
-        "asd231@gmail.com"
+        "romat1000@gmail.com"
       ],
       "birthday": "1977-04-10",
-      "address": "kiev"
+      "address": "Kharkiv"
     },
     {
-      "name": "ghj1",
+      "name": "William",
       "phones": [
         "3231634568"
       ],
       "emails": [
-        "asd2321@gmail.com"
+        "kingdom99@gmail.com"
       ],
-      "birthday": "1977-04-10",
+      "birthday": "1987-05-10",
       "address": null
     },
     {
-      "name": "ghj2",
+      "name": "Lui",
       "phones": [
         "3231634468"
       ],
       "emails": [
-        "asd2321@gmail.com"
+        "lui2321@luilol.com"
       ],
       "birthday": "1985-02-15",
       "address": null
@@ -111,7 +78,7 @@
       "address": "Kharkiv"
     },
     {
-      "name": "name=aaa",
+      "name": "Cristopher",
       "phones": [
         "0000000000"
       ],
@@ -164,6 +131,50 @@
       ],
       "birthday": "1980-03-02",
       "address": null
+    },
+    {
+      "name": "Gendalf",
+      "phones": [
+        "1231234567"
+      ],
+      "emails": [
+        "asd@gmail.com"
+      ],
+      "birthday": null,
+      "address": "kiev"
+    },
+    {
+      "name": "Jude",
+      "phones": [
+        null
+      ],
+      "emails": [
+        "lawj@yahoo.com"
+      ],
+      "birthday": null,
+      "address": null
+    },
+    {
+      "name": "Antony",
+      "phones": [
+        null
+      ],
+      "emails": [
+        null
+      ],
+      "birthday": "1980-02-15",
+      "address": null
+    },
+    {
+      "name": "Boris",
+      "phones": [
+        "1231234566"
+      ],
+      "emails": [
+        "asd2@gmail.com"
+      ],
+      "birthday": "1931-01-01",
+      "address": "kiev"
     }
   ]
 }
