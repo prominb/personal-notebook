@@ -36,14 +36,12 @@ def add_note():
 
 def search_notes(query):
     notes = load_notes()
-    # Переробив пошук
     found_notes = [
         note for note in notes if query.lower() in note['title'].lower()
         or query.lower() in note['content'].lower()
     ]
     
     if found_notes:
-        # Переробив тут вивід під таблицю
         display_notes_in_table(found_notes)
     else:
         print("Нотаток не знайдено.")
@@ -54,7 +52,6 @@ def filter_by_tag(tag):
     filtered_notes = [note for note in notes if tag in note['tags']]
 
     if filtered_notes:
-        # Переробив тут вивід під таблицю
         display_notes_in_table(filtered_notes)
     else:
         print(f"Нотаток з тегом '{tag}' не знайдено.")

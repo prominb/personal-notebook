@@ -17,7 +17,6 @@ class InputError(Exception):
 class ContactAssistant:
 
     def __init__(self):
-        # self.upcoming_birthdays = []  # Змінено на екземпляр атрибуту
         self.address_book = AddressBook()
         self.file_path = "contacts.json"
 
@@ -48,7 +47,7 @@ class ContactAssistant:
             data = {
                 "records": [record.__json__() for record in self.address_book.values()]
             }
-            json.dump(data, file, indent=2)  # Установите indent=2 для форматированного вывода с отступами
+            json.dump(data, file, indent=2)
 
     def load_data(self):
         try:
@@ -271,8 +270,8 @@ class CommandHandler:
             raise InputError(BAD_COMMAND_DELETE)
         name = args_list[1]
         self.contact_assistant.delete_contact(name)
-        # return self.contact_assistant.show_all_contacts()
         return f"Контакт {name} видалений вдало.\n" + self.contact_assistant.show_all_contacts()
+    
     def handle_bye(self, args):
         print("До побачення!")
         return None
@@ -324,8 +323,8 @@ class CommandHandler:
                 raise InputError(BAD_COMMAND_SORTED)
 
             folder_path = args.split(" ")[1]
-            result = main(folder_path)  # Вызываем функцию clean() и сохраняем результат
-            return result  # Возвращаем результат выполнения функции clean()
+            result = main(folder_path)
+            return result
         except InputError as e:
             raise e 
     
@@ -345,7 +344,7 @@ class CommandHandler:
             'search': self.handle_search,
             'email': self.handle_email,
             "show all": self.handle_show,
-            "birthday": self.handle_birthdays,  # Додано обробку команди "birthday"
+            "birthday": self.handle_birthdays,
             "delete": self.handle_delete,
             "exit": self.handle_bye,
             'sorted': self.handle_sorted,

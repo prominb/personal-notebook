@@ -208,12 +208,6 @@ def sort_dir ( root_path , path ) : #  Функція отримує два па
     lists_file_sort ( list_name_all_file , root_path)     
 
 
-
-
-# def sort() :  
-
-
-
 # Основная функция
 def main(path_str: str = None) -> str:
     '''Основна функція яка буде приймає один аргумент це шлях до папки яку сортуємо

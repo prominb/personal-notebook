@@ -25,7 +25,6 @@ class Field:
         return str(self.value)
 
     def is_valid(self, value):
-        # return isinstance(value, (int, float, str))
         return True
 
     def __json__(self):
@@ -67,12 +66,6 @@ class Email(Field):
     
 
 class Address(Field):
-
-    # def is_valid(self, value):
-    #     # return isinstance(value, str) and value
-    #     return str(value) if value else None
-    # def __json__(self):
-    #     return str(self.value) if self.value else None
     
     def __json__(self):
         return str(self.value) if self.value else None
