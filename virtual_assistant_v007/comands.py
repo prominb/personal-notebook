@@ -12,7 +12,7 @@ PATH_TO_DIR = fr"C:\Users\User\Desktop\Go_IT\Rizne"
 
 BAD_COMMAND_ADD = (f"{YLLOW}Невірні параметри для команди {GREEN}'add'{YLLOW} !!!.\n\
                         {RED}# Приклад {GREEN}add{BIRUZA} Імя_контакту"
-                   f"{YLLOW} [phone=1111111111] [email=1111@mai.com] [birthday=1999-01-01] [adress=Kiev] {DEFALUT}")
+                   f"{YLLOW} [phone=1111111111] [email=1111@mai.com] [birthday=1999-01-01] [address=Kyiv] {DEFALUT}")
     
 BAD_COMMAND_CHANGE = f"{YLLOW}Невірні параметри для команди {GREEN}'change'{YLLOW} !!!.\n\
                            {RED}# Приклад {GREEN}change{BIRUZA} Імя_контакту {GREEN}name={BIRUZA}Нове ім'я "

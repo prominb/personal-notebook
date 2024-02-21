@@ -175,6 +175,17 @@
       ],
       "birthday": "1931-01-01",
       "address": "kiev"
+    },
+    {
+      "name": "Petro",
+      "phones": [
+        "0664445577"
+      ],
+      "emails": [
+        "petrik@poshta.ua"
+      ],
+      "birthday": "1999-05-04",
+      "address": "Mykolaiv"
     }
   ]
 }
