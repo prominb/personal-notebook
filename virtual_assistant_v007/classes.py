@@ -214,6 +214,9 @@ class AddressBook(UserDict):
     def delete(self, name):
         if name in self.data:
             del self.data[name]
+            return 'Ok'
+        else:
+            raise ValueError(NOT_FOUND_NAME)
 
     def iterator(self, page_size=10):
         keys = list(self.data.keys())

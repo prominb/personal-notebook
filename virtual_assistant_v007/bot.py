@@ -15,6 +15,15 @@ class InputError(Exception):
 
 
 class ContactAssistant:
+
+    def __init__(self):
+        # self.upcoming_birthdays = []  # Змінено на екземпляр атрибуту
+        self.address_book = AddressBook()
+        self.file_path = "contacts.json"
+
+        if os.path.exists(self.file_path):
+            self.load_data()
+
     def birthdays_in_days(self, days):
         upcoming_birthdays = []
 
@@ -33,14 +42,6 @@ class ContactAssistant:
                     upcoming_birthdays.append((record.name.value, days_left))
 
         return upcoming_birthdays
-
-    def __init__(self):
-        # self.upcoming_birthdays = []  # Змінено на екземпляр атрибуту
-        self.address_book = AddressBook()
-        self.file_path = "contacts.json"
-
-        if os.path.exists(self.file_path):
-            self.load_data()
 
     def save_data(self):
         with open(self.file_path, "w") as file:
@@ -168,8 +169,14 @@ class ContactAssistant:
                 result += (f"{record.name.value:<10} {str(record.birthday):^12} {phone_numbers:<12}"
                            f" {emails:<20} {str(record.address):<20}\n")
 
-            return result.strip()   
+            return result.strip()
 
+    def delete_contact(self, name):
+        try:
+            self.address_book.delete(name)
+
+        except (ValueError, IndexError) as e:
+            raise InputError(str(e))
 
 class CommandHandler:
     
@@ -258,6 +265,14 @@ class CommandHandler:
     def handle_show(self, args):
         return self.contact_assistant.show_all_contacts()
 
+    def handle_delete(self, args):
+        args_list = args.split(" ")
+        if len(args_list) < 2:
+            raise InputError(BAD_COMMAND_DELETE)
+        name = args_list[1]
+        self.contact_assistant.delete_contact(name)
+        # return self.contact_assistant.show_all_contacts()
+        return f"Контакт {name} видалений вдало.\n" + self.contact_assistant.show_all_contacts()
     def handle_bye(self, args):
         print("До побачення!")
         return None
@@ -331,6 +346,7 @@ class CommandHandler:
             'email': self.handle_email,
             "show all": self.handle_show,
             "birthday": self.handle_birthdays,  # Додано обробку команди "birthday"
+            "delete": self.handle_delete,
             "exit": self.handle_bye,
             'sorted': self.handle_sorted,
             'notes': self.handle_notes,

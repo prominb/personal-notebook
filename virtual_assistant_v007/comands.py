@@ -3,7 +3,7 @@ from virtual_assistant_v007.colors import *
 
 PISKAZKA_SHOW_ALL = f"\nКоманда - {GREEN}show all{YLLOW} - покаже доступні контакти{DEFALUT}"
 
-LIST_COMANDS_BOT = ["hello", "help", "add", "show all", "change", 'search', "get phone",
+LIST_COMANDS_BOT = ["hello", "help", "add", "show all", "change", "delete", 'search', "get phone",
                     "email", 'birthday', 'sorted', 'notes', "exit"]
 
 DOSTUPNI_COMANDY = f"{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}{DEFALUT}"
@@ -30,11 +30,15 @@ BAD_COMMAND_SORTED = (f"{YLLOW}Невірні параметри для кома
 
 BAD_COMMAND_NOTES = f"{YLLOW}Невірні параметри для команди {GREEN}'notes'{YLLOW} !!!.\n\
                         {RED}# Приклад {GREEN}notes"
+
 BAD_COMMAND_EMAIL = f"{YLLOW}Невірні параметри для команди {GREEN}'email'{YLLOW} !!!.\n\
                         {RED}# Приклад {GREEN}'email'{BIRUZA}Імя_контакту{YLLOW} "
 
 BAD_COMMAND_BIRTHDAYS = f"{YLLOW}Невірні параметри для команди {GREEN}'birthday'{YLLOW} !!!.\n\
                 {RED}# Приклад:  {GREEN}birthday{YLLOW} 50  {RED}<<{GREEN} birthday {YLLOW}'кількість днів'{RED} >>"
+
+BAD_COMMAND_DELETE = f"{YLLOW}Невірні параметри для команди {GREEN}'delete'{YLLOW} !!!.\n\
+                           {RED}# Приклад {GREEN}delete{BIRUZA} Імя_контакту{DEFALUT}"
 
 BAD_FORMAT_PHONE = (f"{RED}Невірний формат !!!{YLLOW}<Номер може містити тільки 10 цифри !!!>\n{GREEN}\
                     ### Приклад:  0931245891{DEFALUT}")
@@ -43,7 +47,7 @@ BAD_FORMAT_EMAIL = f"{YLLOW}Не вірний формат e-mail.\n {RED}При
 
 BAD_FORMAT_BIRTHDAY = f"{YLLOW}Не вірний формат дати народження. Використовуйте {RED}YYYY-MM-DD."
 
-NOT_FOUND_NAME = f"{YLLOW}Такого імені не знайдено у вашій телефоній книзі !!!\n {PISKAZKA_SHOW_ALL}"
+NOT_FOUND_NAME = f"{YLLOW}Такого імені не знайдено у вашій телефонній книзі !!!\n {PISKAZKA_SHOW_ALL}"
 
 NOT_FOUND_COMMAND = f'{YLLOW}Tака команда не пітримується наразі\n{DEFALUT}{DOSTUPNI_COMANDY}'
 
@@ -67,6 +71,8 @@ HELP = f" {GREEN}Довідка для Контактного Асистента
                 f"{YLLOW}    Головна, 1` (невірний номер телефону).{DEFALUT}\n" \
                 f"{BIRUZA}- `change name <ім'я_контакту> <поле_для_зміни>=<нове_значення>`: Змінити деталі контакту.{DEFALUT}\n" \
                 f"{YLLOW}  - Приклад: `change Іван Петров email=newemail@example.com`{DEFALUT}\n" \
+                f"{BIRUZA}- `delete <ім'я_контакту>: Видалити контакт.{DEFALUT}\n" \
+                f"{YLLOW}  - Приклад: `delete Mykola`{DEFALUT}\n" \
                 f"{BIRUZA}- `phone name <ім'я_контакту>`: Отримати номер телефону контакту.{DEFALUT}\n" \
                 f"{YLLOW}  - Приклад: `phone Іван Петров`{DEFALUT}\n" \
                 f"{BIRUZA}- `search <запит>`: Пошук контактів за ім'ям, номером телефону, електронною поштою чи адресою.{DEFALUT}\n" \
