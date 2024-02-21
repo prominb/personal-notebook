@@ -234,7 +234,7 @@ class CommandHandler:
             return self.contact_assistant.change_contact(name, newname=val.strip())
 
         else:
-                raise InputError(BAD_COMMAND_CHANGE)
+            raise InputError(BAD_COMMAND_CHANGE)
 
     def handle_email(self, args):
         if len(args.split()) < 2:
@@ -264,11 +264,6 @@ class CommandHandler:
 
     def handle_birthdays(self, args):
         try:
-            # if args.strip().lower() == 'birthday':
-            #     return BAD_COMMAND_BIRTHDAYS 
-            #           #Було   f"{YLLOW}Невірні параметри для команди {BIRUZA}birthday{YLLOW}!!!.\n" \
-            #               #   f"{DEFALUT}# Приклад {BIRUZA}birthday{DEFALUT} кількість днів."
-
             if len(args.split()) < 2:
                 raise InputError(BAD_COMMAND_BIRTHDAYS)
 
@@ -290,7 +285,7 @@ class CommandHandler:
 
     def handle_search(self, args):
         if len(args.split()) < 2:
-                raise InputError(BAD_COMMAND_SEARCH)
+            raise InputError(BAD_COMMAND_SEARCH)
 
         query = args.split(" ", 1)[1]
 
@@ -323,11 +318,8 @@ class CommandHandler:
         run_notes()
         return f"{YLLOW}Роботу з нотатками завершено!!!\n{PURPURE}Готовий до наступних команд!!!{DEFALUT}"
 
-     
     def handle_help(self, args):
         return HELP
-                
-               
 
     def choice_action(self, data):
         actions = {
@@ -355,7 +347,7 @@ class CommandHandler:
 
             if space_index != -1:
                 list_word = user_input.lower().strip().split()
-                first_word= user_input[:space_index]
+                first_word = user_input[:space_index]
                 
                 if list_word[0] == "show" and list_word[1] == "all":
                     first_word = "show all"
@@ -384,17 +376,11 @@ class Bot:
         print(f'{RED}Доступні наступні команди : {GREEN}{LIST_COMANDS_BOT}')
         contact_assistant = ContactAssistant()
         command_handler = CommandHandler(contact_assistant)
-        # Список вариантів для автодоповнення
-        # words = ['hello', 'help', 'add', 'change', 'phone', 'show all', 'search', 'good bye', 'close',
-        # 'exit', 'sorted', 'notes']
 
-        # Створюємо комплиттер з нашими варінтами
         completer = WordCompleter(LIST_COMANDS_BOT, ignore_case=True)
 
         while True:
             try:
-
-                # user_input = prompt("Введіть команду>> ", completer=completer).lower().strip()
                 user_input = prompt("Введіть команду>> ", completer=completer).strip()
                 result = command_handler.process_input(user_input)
 

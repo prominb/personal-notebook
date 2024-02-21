@@ -5,7 +5,6 @@ from datetime import datetime
 from collections import UserDict
 
 
-
 class Field:
     def __init__(self, value):
         if not self.is_valid(value):
@@ -41,10 +40,8 @@ class Name(Field):
 class Phone(Field):
     def __init__(self, value):
         if not self.is_valid(value):
-
             raise ValueError(f"{BAD_FORMAT_PHONE}")
-                    #Було    f"Не вірний номер телефона {value}.\n "
-                    #         f"Номер може містити тільки 10 цифри!!! Приклад - 0931245891"
+
         super().__init__(value)
 
     def is_valid(self, value):
@@ -58,13 +55,11 @@ class Email(Field):
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError(BAD_FORMAT_EMAIL)
-                    # Було f"Не вірний формат e-mail {value}.\n Приклад - python@gmail.com"
         super().__init__(value)
 
     def is_valid(self, value):
         if not value:
             return True
-        # return isinstance(value, str) and '@' in value
         return re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$', value)
     
     def __json__(self):
@@ -87,8 +82,6 @@ class Birthday(Field):
     def __init__(self, value=None):
         if not self.is_valid(value):
             raise ValueError(BAD_FORMAT_BIRTHDAY)
-                # Було "Не вірний формат дати народження. Використовуйте YYYY-MM-DD."
-
         super().__init__(value)
 
     @property
@@ -99,7 +92,6 @@ class Birthday(Field):
     def value(self, new_value):
         if not self.is_valid(new_value):
             raise ValueError(BAD_FORMAT_BIRTHDAY)
-                # Було "Не вірний формат дати народження. Використовуйте YYYY-MM-DD."
         if new_value:
             datetime.strptime(new_value, "%Y-%m-%d")
         self.__value = new_value
@@ -144,20 +136,18 @@ class Record:
         initial_len = len(self.phones)
         self.phones = [p for p in self.phones if p.value != phone]
         if len(self.phones) == initial_len:
-            raise ValueError(f"{YLLOW}Такого номера телефона <--'{RED}{phone}{YLLOW}-->' немає нажаль у вашій телефоній книжці")
-                            # Було f"Phone number '{phone}' not found"
+            raise ValueError(f"{YLLOW}Такого номера телефона <--'{RED}{phone}"
+                             f"{YLLOW}-->' немає нажаль у вашій телефонній книжці")
 
     def edit_phone(self, old_phone, new_phone):
         if not Phone(new_phone).is_valid(new_phone):
             raise ValueError(f"\n {YLLOW}-- <'{RED}{new_phone}{YLLOW}'> -- {BAD_FORMAT_PHONE}")
-                            # Було f"Invalid phone number format for '{new_phone}'"
         for p in self.phones:
             if p.value == old_phone:
                 p.value = new_phone
                 return
-        raise ValueError(f"{YLLOW}Такого номера телефона <--'{RED}{old_phone}{YLLOW}-->' немає нажаль у вашій телефоній книжці")
-                        # Було f"Phone number '{old_phone}' not found"
-                        
+        raise ValueError(f"{YLLOW}Такого номера телефона <--'{RED}{old_phone}"
+                         f"{YLLOW}-->' немає нажаль у вашій телефонній книжці")
 
     def find_phone(self, phone):
         found_numbers = [p for p in self.phones if p.value == phone]
@@ -240,6 +230,5 @@ class AddressBook(UserDict):
             self.data[new_name] = record
             self.delete(old_name)
         else:
-            raise ValueError(f"{YLLOW}Такого імені <--'{RED}{old_name}{YLLOW}-->' немає нажаль у вашій телефоній книжці")
-                        # Було f"Contact name {old_name} not exist in {self.data}."
+            raise ValueError(NOT_FOUND_NAME)
         return 'Ok'

@@ -17,8 +17,10 @@ def save_notes(notes):
     with open('notes.json', 'w') as file:
         json.dump(notes, file, indent=2)
 
+
 def wrap_text(text, width):
     return '\n'.join(wrap(text, width))
+
 
 def add_note():
     title = input("Введіть заголовок нотатки: ")
@@ -36,7 +38,7 @@ def search_notes(query):
     notes = load_notes()
     # Переробив пошук
     found_notes = [
-        note for note in notes if query.lower() in note['title'].lower() \
+        note for note in notes if query.lower() in note['title'].lower()
         or query.lower() in note['content'].lower()
     ]
     
@@ -57,19 +59,23 @@ def filter_by_tag(tag):
     else:
         print(f"Нотаток з тегом '{tag}' не знайдено.")
 
+
 def display_all_notes():
     notes = load_notes()
     display_notes_in_table(notes)
+
 
 def display_notes_by_tag(tag):
     notes = load_notes()
     filtered_notes = [note for note in notes if tag in note['tags']]
     display_notes_in_table(filtered_notes)
 
+
 def display_notes_by_tags_in_table(tags):
     notes = load_notes()
     filtered_notes = [note for note in notes if all(tag in note['tags'] for tag in tags)]
     display_notes_in_table(filtered_notes)
+
 
 def display_note_by_title(title):
     notes = load_notes()
@@ -78,6 +84,7 @@ def display_note_by_title(title):
             display_notes_in_table([note])
             return
     print(f"Нотатка з заголовком '{title}' не знайдена.")
+
 
 def edit_note():
     notes = load_notes()
@@ -129,6 +136,7 @@ def display_note(title):
 
     print(f"Нотатка з заголовком '{title}' не знайдена.")
 
+
 def display_notes_in_table(notes):
     if not notes:
         print("Список нотаток порожній.")
@@ -144,18 +152,18 @@ def display_notes_in_table(notes):
     print("\nНотатки:")
     print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
     print(
-        f"| {'Заголовок': <{column_widths['title'] + 5}} | " \
-        f"{'Текст': <{column_widths['content']}} | " \
-        f"{'Теги': <{column_widths['tags']}} | " \
+        f"| {'Заголовок': <{column_widths['title'] + 5}} | "
+        f"{'Текст': <{column_widths['content']}} | "
+        f"{'Теги': <{column_widths['tags']}} | "
         f"{'Змінено': <{column_widths['modified']}} |"
     )
     print('-' * (sum(column_widths.values()) + len(column_widths) * 5 - 1))
     
     for note in notes:
         print(
-            f"| {note['title']: <{column_widths['title'] + 5}} | " \
-            f"{note['content']: <{column_widths['content']}} | " \
-            f"{', '.join(note['tags']): <{column_widths['tags']}} | " \
+            f"| {note['title']: <{column_widths['title'] + 5}} | "
+            f"{note['content']: <{column_widths['content']}} | "
+            f"{', '.join(note['tags']): <{column_widths['tags']}} | "
             f"{note['modified']: <{column_widths['modified']}} |"
         )
 
