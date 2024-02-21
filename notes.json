@@ -10,15 +10,6 @@
     "modified": "20/02/2024, 20:09"
   },
   {
-    "title": "Test2 v2",
-    "content": "ASD fgtbry sthrynbyrn sethbtb. Test check2!",
-    "tags": [
-      "sometext",
-      "old"
-    ],
-    "modified": "18/02/2024, 23:54"
-  },
-  {
     "title": "Remember note",
     "content": "Some one in winter forest.",
     "tags": [
@@ -71,5 +62,22 @@
       "buy"
     ],
     "modified": "20/02/2024, 20:18"
+  },
+  {
+    "title": "Note33",
+    "content": "Wait me tomorrow at 6 p.m.",
+    "tags": [
+      "dates,",
+      "summer"
+    ],
+    "modified": "21/02/2024, 22:13"
+  },
+  {
+    "title": "Note44",
+    "content": "Cold winter nigth.",
+    "tags": [
+      "winter"
+    ],
+    "modified": "21/02/2024, 22:16"
   }
 ]

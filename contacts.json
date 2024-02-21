@@ -100,17 +100,6 @@
       "address": "Miamy"
     },
     {
-      "name": "cat",
-      "phones": [
-        "1231234567"
-      ],
-      "emails": [
-        null
-      ],
-      "birthday": null,
-      "address": null
-    },
-    {
       "name": "John",
       "phones": [
         "2231234568"
@@ -186,6 +175,50 @@
       ],
       "birthday": "1999-05-04",
       "address": "Mykolaiv"
+    },
+    {
+      "name": "Ivan",
+      "phones": [
+        "0997894512"
+      ],
+      "emails": [
+        "navi7@meta.ua"
+      ],
+      "birthday": "2001-02-22",
+      "address": "Uman"
+    },
+    {
+      "name": "Catty",
+      "phones": [
+        "1231234567"
+      ],
+      "emails": [
+        null
+      ],
+      "birthday": null,
+      "address": null
+    },
+    {
+      "name": "Lina",
+      "phones": [
+        "0976528145"
+      ],
+      "emails": [
+        "linak@ukraine.ua"
+      ],
+      "birthday": "1958-11-12",
+      "address": "Kyiv"
+    },
+    {
+      "name": "Tony",
+      "phones": [
+        "3216548533"
+      ],
+      "emails": [
+        null
+      ],
+      "birthday": null,
+      "address": null
     }
   ]
 }
