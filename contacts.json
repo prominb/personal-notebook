@@ -34,17 +34,6 @@
       "address": "kiev"
     },
     {
-      "name": "da",
-      "phones": [
-        "2231234568"
-      ],
-      "emails": [
-        "asd5@gmail.com"
-      ],
-      "birthday": null,
-      "address": "kiev"
-    },
-    {
       "name": "asg",
       "phones": [
         "1241234568"
@@ -111,17 +100,6 @@
       "address": "Kyiv"
     },
     {
-      "name": "Rom1",
-      "phones": [
-        "0505852071"
-      ],
-      "emails": [
-        "df@mail.com"
-      ],
-      "birthday": "1971-08-22",
-      "address": "Kyiv"
-    },
-    {
       "name": "Romaro",
       "phones": [
         "0508885522"
@@ -131,17 +109,6 @@
       ],
       "birthday": "1985-05-25",
       "address": "Kharkiv"
-    },
-    {
-      "name": "pol",
-      "phones": [
-        "0504564556"
-      ],
-      "emails": [
-        "pol@fg.com"
-      ],
-      "birthday": "1980-03-02",
-      "address": null
     },
     {
       "name": "name=aaa",
@@ -174,6 +141,28 @@
         null
       ],
       "birthday": null,
+      "address": null
+    },
+    {
+      "name": "John",
+      "phones": [
+        "2231234568"
+      ],
+      "emails": [
+        "asd5@gmail.com"
+      ],
+      "birthday": null,
+      "address": "kiev"
+    },
+    {
+      "name": "Poul",
+      "phones": [
+        "0504564556"
+      ],
+      "emails": [
+        "pol@fg.com"
+      ],
+      "birthday": "1980-03-02",
       "address": null
     }
   ]
