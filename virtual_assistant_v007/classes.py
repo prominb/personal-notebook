@@ -14,6 +14,7 @@ class FieldAbstract(ABC):
 
 class Field(FieldAbstract):
     
+    
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError
