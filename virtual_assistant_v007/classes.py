@@ -3,9 +3,17 @@ from virtual_assistant_v007.comands import *
 from virtual_assistant_v007.colors import *
 from datetime import datetime
 from collections import UserDict
+from abc import ABC, abstractmethod
 
 
-class Field:
+class FieldAbstract(ABC):
+    '''Абстрактний клас для класу Field'''
+    @abstractmethod
+    def is_valid(self, value):  
+        pass
+
+class Field(FieldAbstract):
+    
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError
